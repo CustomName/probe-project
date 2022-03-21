@@ -1,0 +1,38 @@
+openapi: 3.0.2
+info:
+  title: probe-project
+  description: "probe-project for test testing"
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: admin@gmail.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 0.0.1-SNAPSHOT
+tags:
+  - name: admin
+    description: Operations for administrating
+paths:
+  /admin/ping:
+    get:
+      tags:
+        - admin
+      summary: Ping service
+      description: Just ping service
+      operationId: ping
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PingResponse'
+components:
+  schemas:
+    PingResponse:
+      type: object
+      properties:
+        result:
+          type: string
+        message:
+          type: string
