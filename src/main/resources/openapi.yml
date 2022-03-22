@@ -11,7 +11,9 @@ info:
   version: 0.0.1-SNAPSHOT
 tags:
   - name: admin
-    description: Operations for administrating
+    description: Администрирование
+  - name: clients
+    description: Клинты
 paths:
   /admin/ping:
     get:
@@ -22,11 +24,35 @@ paths:
       operationId: ping
       responses:
         200:
-          description: successful operation
+          description: успешный ping
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/PingResponse'
+  /clients:
+    get:
+      tags:
+        - clients
+      summary: Client service
+      description: Client service
+      operationId: clientByInn
+      responses:
+        200:
+          description: успешное получение клиента по инн
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientResponse'
+    parameters:
+      - name: inn
+        in: path
+        description: ИНН клиента
+        required: true
+        schema:
+          type: string
+          minLength: 12
+          maxLength: 12
+        style: simple
 components:
   schemas:
     PingResponse:
@@ -35,4 +61,16 @@ components:
         result:
           type: string
         message:
+          type: string
+    ClientResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          pattern: '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'
+          minLength: 36
+          maxLength: 36
+        fio:
+          type: string
+        inn:
           type: string
