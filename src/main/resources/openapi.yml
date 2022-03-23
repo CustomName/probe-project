@@ -1,60 +1,111 @@
-openapi: 3.0.2
+openapi: '3.0.0'
 info:
   title: probe-project
   description: "probe-project for test testing"
-  termsOfService: http://swagger.io/terms/
-  contact:
-    email: admin@gmail.com
-  license:
-    name: Apache 2.0
-    url: http://www.apache.org/licenses/LICENSE-2.0.html
   version: 0.0.1-SNAPSHOT
+servers:
+  - url: http://localhost
+
 tags:
   - name: admin
     description: Администрирование
   - name: clients
-    description: Клинты
+    description: Клиенты
+
 paths:
+
   /admin/ping:
     get:
       tags:
         - admin
-      summary: Ping service
-      description: Just ping service
+      summary: Проверка доступности сервиса
+      description: Проверка доступности сервиса
       operationId: ping
       responses:
         200:
-          description: успешный ping
+          description: Успешный ping
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/PingResponse'
-  /clients:
+
+  /clients/{inn}:
     get:
       tags:
         - clients
-      summary: Client service
-      description: Client service
-      operationId: clientByInn
+      summary: Поиск клиента по инн
+      description: Поиск клиента по инн
+      operationId: findClientByInn
+      parameters:
+        - name: inn
+          in: path
+          description: ИНН клиента
+          required: true
+          schema:
+            type: string
+            minLength: 12
+            maxLength: 12
       responses:
         200:
-          description: успешное получение клиента по инн
+          description: Успешное получение клиента по инн
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ClientResponse'
-    parameters:
-      - name: inn
-        in: path
-        description: ИНН клиента
-        required: true
-        schema:
-          type: string
-          minLength: 12
-          maxLength: 12
-        style: simple
+        400:
+          $ref: '#/components/responses/400'
+        404:
+          $ref: '#/components/responses/404'
+        500:
+          $ref: '#/components/responses/500'
+
 components:
+
+  responses:
+
+    200:
+      description: OK
+      content: { }
+
+    400:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+    404:
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+    500:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
   schemas:
+
+    Error:
+      description: Описание ошибки
+      type: object
+      required:
+        - errorCode
+        - timestamp
+      properties:
+        errorCode:
+          type: string
+          description: Код ошибки
+        timestamp:
+          type: string
+          format: date-time
+          pattern: 'MM/DD/YYYY HH24:MI:SS'
+          description: Дата и время ошибки
+
     PingResponse:
       type: object
       properties:
@@ -62,6 +113,7 @@ components:
           type: string
         message:
           type: string
+
     ClientResponse:
       type: object
       properties:
@@ -72,5 +124,8 @@ components:
           maxLength: 36
         fio:
           type: string
+          maxLength: 100
         inn:
           type: string
+          minLength: 12
+          maxLength: 12

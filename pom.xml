@@ -17,7 +17,8 @@
 		<java.version>11</java.version>
 		<swagger-annotations-version>1.5.22</swagger-annotations-version>
 		<springfox-version>2.9.2</springfox-version>
-		<jackson-version>2.10.2</jackson-version>
+		<springdoc-version>1.5.4</springdoc-version>
+		<jackson-version>2.12.6</jackson-version>
 		<jackson-databind-nullable>0.2.1</jackson-databind-nullable>
 		<javax-validation-version>2.0.1.Final</javax-validation-version>
 	</properties>
@@ -47,9 +48,9 @@
 			<version>${springfox-version}</version>
 		</dependency>
 		<dependency>
-			<groupId>io.springfox</groupId>
-			<artifactId>springfox-swagger-ui</artifactId>
-			<version>${springfox-version}</version>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-ui</artifactId>
+			<version>${springdoc-version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
@@ -118,9 +119,7 @@
 							<goal>generate</goal>
 						</goals>
 						<configuration>
-							<inputSpec>
-								${project.basedir}/src/main/resources/openapi.yml
-							</inputSpec>
+							<inputSpec>${project.basedir}/src/main/resources/openapi.yml</inputSpec>
 							<generatorName>spring</generatorName>
 							<apiPackage>ru.axl.probeproject.api</apiPackage>
 							<modelPackage>ru.axl.probeproject.model</modelPackage>
