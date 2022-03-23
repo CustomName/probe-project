@@ -8,12 +8,21 @@ import ru.axl.probeproject.api.ClientsApi;
 import ru.axl.probeproject.model.ClientResponse;
 import ru.axl.probeproject.services.ClientService;
 
+import java.util.List;
+
 @Slf4j
 @RestController
 @AllArgsConstructor
 public class ClientController implements ClientsApi {
 
     private final ClientService clientService;
+
+    @Override
+    public ResponseEntity<List<ClientResponse>> getClients() {
+        List<ClientResponse> clientResponses = clientService.findAll();
+
+        return ResponseEntity.ok(clientResponses);
+    }
 
     @Override
     public ResponseEntity<ClientResponse> findClientByInn(String inn) {
