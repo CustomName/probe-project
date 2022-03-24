@@ -76,6 +76,33 @@ paths:
         500:
           $ref: '#/components/responses/500'
 
+  /processes:
+    post:
+      tags:
+        - process
+      summary: Создание нового процесса
+      description: Создание нового процесса
+      operationId: postProcess
+      requestBody:
+        description: Запрос для создания процесса
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/ProcessRequest'
+      responses:
+        201:
+          description: Успешное создание нового процесса
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProcessResponse'
+        400:
+          $ref: '#/components/responses/400'
+        404:
+          $ref: '#/components/responses/404'
+        500:
+          $ref: '#/components/responses/500'
+
 components:
 
   responses:
@@ -134,7 +161,7 @@ components:
     ClientResponse:
       type: object
       properties:
-        id:
+        idClient:
           type: string
           pattern: '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'
           minLength: 36
@@ -151,3 +178,25 @@ components:
       type: array
       items:
         $ref: '#/components/schemas/ClientResponse'
+
+    ProcessRequest:
+      type: object
+      properties:
+        clientInn:
+          type: string
+          minLength: 12
+          maxLength: 12
+
+    ProcessResponse:
+      type: object
+      properties:
+        idProcess:
+          type: string
+          pattern: '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'
+          minLength: 36
+          maxLength: 36
+
+    ProcessListResponse:
+      type: array
+      items:
+        $ref: '#/components/schemas/ProcessResponse'

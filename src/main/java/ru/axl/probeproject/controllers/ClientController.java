@@ -10,6 +10,8 @@ import ru.axl.probeproject.services.ClientService;
 
 import java.util.List;
 
+import static org.springframework.http.ResponseEntity.ok;
+
 @Slf4j
 @RestController
 @AllArgsConstructor
@@ -21,14 +23,14 @@ public class ClientController implements ClientsApi {
     public ResponseEntity<List<ClientResponse>> getClients() {
         List<ClientResponse> clientResponses = clientService.findAll();
 
-        return ResponseEntity.ok(clientResponses);
+        return ok(clientResponses);
     }
 
     @Override
     public ResponseEntity<ClientResponse> findClientByInn(String inn) {
         ClientResponse clientResponse = clientService.findByInn(inn);
 
-        return ResponseEntity.ok(clientResponse);
+        return ok(clientResponse);
     }
 
 }

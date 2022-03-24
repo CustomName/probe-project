@@ -20,14 +20,14 @@ import static ru.axl.probeproject.exceptions.ApiError.CLIENT_NOT_FOUND;
 @AllArgsConstructor
 public class ClientServiceImpl implements ClientService {
 
-    private final ClientRepository clientRepository;
+    private final ClientRepository clientRepo;
     private final ClientMapper clientMapper;
 
     @Override
     public List<ClientResponse> findAll() {
         log.info("Получение всех клиентов");
 
-        List<Client> clients = clientRepository.findAll();
+        List<Client> clients = clientRepo.findAll();
         List<ClientResponse> clientResponses = clientMapper.toClientResponseList(clients);
         log.info("Найдены клиенты: {}", clientResponses);
 
@@ -38,7 +38,7 @@ public class ClientServiceImpl implements ClientService {
     public ClientResponse findByInn(String inn) {
         log.info("Поиск клиента по инн {}", inn);
 
-        Optional<Client> clientOpt = clientRepository.findByInn(inn);
+        Optional<Client> clientOpt = clientRepo.findByInn(inn);
         Client client = clientOpt.orElseThrow(() ->
                 new ApiException(CLIENT_NOT_FOUND, String.format("Не найден клиент с инн %s", inn)));
 

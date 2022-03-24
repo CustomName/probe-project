@@ -12,7 +12,8 @@ public class Client {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
-    private UUID id;
+    @Column(name = "id_client")
+    private UUID idClient;
 
     @Column(name="fio", length=100, nullable=false)
     private String fio;
