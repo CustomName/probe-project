@@ -43,14 +43,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ClientListResponse'
-        400:
-          $ref: '#/components/responses/400'
-        404:
-          $ref: '#/components/responses/404'
         500:
           $ref: '#/components/responses/500'
 
-  /clients/filter:
+  /clients/inn/{inn}:
     get:
       tags:
         - clients
@@ -59,7 +55,7 @@ paths:
       operationId: findClientByInn
       parameters:
         - name: inn
-          in: query
+          in: path
           description: ИНН клиента
           required: true
           schema:
