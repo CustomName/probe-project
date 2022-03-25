@@ -9,7 +9,8 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 @AllArgsConstructor
 public enum ApiError {
 
-    CLIENT_NOT_FOUND("CLIENT_NOT_FOUND", NOT_FOUND.value());
+    CLIENT_NOT_FOUND("CLIENT_NOT_FOUND", NOT_FOUND.value()),
+    PROCESS_NOT_FOUND("PROCESS_NOT_FOUND", NOT_FOUND.value());
 
     private final String code;
     private final int httpCode;

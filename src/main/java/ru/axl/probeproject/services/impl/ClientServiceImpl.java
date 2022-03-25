@@ -29,21 +29,21 @@ public class ClientServiceImpl implements ClientService {
 
         List<Client> clients = clientRepo.findAll();
         List<ClientResponse> clientResponses = clientMapper.toClientResponseList(clients);
-        log.info("Найдены клиенты: {}", clientResponses);
+        log.info("Найдены клиенты:\n {}", clientResponses);
 
         return clientResponses;
     }
 
     @Override
     public ClientResponse findByInn(String inn) {
-        log.info("Поиск клиента по инн {}", inn);
+        log.info("Поиск клиента по инн = {}", inn);
 
         Optional<Client> clientOpt = clientRepo.findByInn(inn);
         Client client = clientOpt.orElseThrow(() ->
                 new ApiException(CLIENT_NOT_FOUND, String.format("Не найден клиент с инн %s", inn)));
 
         ClientResponse clientResponse = clientMapper.toClientResponse(client);
-        log.info("Найден клиент: {}", clientResponse);
+        log.info("Найден клиент:\n {}", clientResponse);
 
         return clientResponse;
     }

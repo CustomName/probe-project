@@ -9,6 +9,9 @@ import ru.axl.probeproject.model.ProcessRequest;
 import ru.axl.probeproject.model.ProcessResponse;
 import ru.axl.probeproject.services.ProcessService;
 
+import java.util.List;
+import java.util.UUID;
+
 import static org.springframework.http.ResponseEntity.ok;
 
 @Slf4j
@@ -17,6 +20,13 @@ import static org.springframework.http.ResponseEntity.ok;
 public class ProcessController implements ProcessesApi {
 
     private final ProcessService processService;
+
+    @Override
+    public ResponseEntity<List<ProcessResponse>> getAllClientProcesses(String idClient) {
+        List<ProcessResponse> clientProcesses = processService.findAllClientProcesses(UUID.fromString(idClient));
+
+        return ok(clientProcesses);
+    }
 
     @Override
     public ResponseEntity<ProcessResponse> postProcess(ProcessRequest processRequest) {

@@ -13,7 +13,11 @@ import ru.axl.probeproject.repositories.ClientRepository;
 import ru.axl.probeproject.repositories.ProcessRepository;
 import ru.axl.probeproject.services.ProcessService;
 
+import java.util.List;
+import java.util.UUID;
+
 import static ru.axl.probeproject.exceptions.ApiError.CLIENT_NOT_FOUND;
+import static ru.axl.probeproject.utils.Utils.getNowOffsetDateTime;
 
 @Slf4j
 @Service
@@ -26,18 +30,31 @@ public class ProcessServiceImpl implements ProcessService {
 
     @Override
     public ProcessResponse createProcess(ProcessRequest processRequest) {
-        log.info("Создание нового процесса для пользователя с инн {}", processRequest.getClientInn());
+        log.info("Создание нового процесса для клиента с инн = {}", processRequest.getClientInn());
 
         Client client = clientRepo.findByInn(processRequest.getClientInn()).orElseThrow(() ->
                 new ApiException(CLIENT_NOT_FOUND, String.format("Не найден клиент с инн %s", processRequest.getClientInn())));
         Process process = new Process();
         process.setClient(client);
+        process.setStartDate(getNowOffsetDateTime());
+        process.setLastUpdateDate(getNowOffsetDateTime());
         process = processRepo.save(process);
 
         ProcessResponse processResponse = processMapper.toProcessResponse(process);
-        log.info("Процесс создан {}", processResponse);
+        log.info("Процесс создан\n {}", processResponse);
 
         return processResponse;
+    }
+
+    @Override
+    public List<ProcessResponse> findAllClientProcesses(UUID idClient) {
+        log.info("Поиск всех процессов клиента с uuid = {}", idClient);
+        List<Process> processes = processRepo.findAllByIdClient(idClient);
+
+        List<ProcessResponse> processResponses = processMapper.toProcessResponseList(processes);
+        log.info("Найдены процессы\n {}", processResponses);
+
+        return processResponses;
     }
 
 }
