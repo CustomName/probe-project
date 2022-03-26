@@ -136,6 +136,23 @@ paths:
         500:
           $ref: '#/components/responses/500'
 
+  /process-statuses:
+    get:
+      tags:
+        - processStatuses
+      summary: Получение списка всех возможных статусов процесса
+      description: Получение списка всех возможных статусов процесса
+      operationId: getAllProcessStatuses
+      responses:
+        200:
+          description: Успешное получение списка всех возможных статусов процесса
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProcessStatusListResponse'
+        500:
+          $ref: '#/components/responses/500'
+
 components:
 
   responses:
@@ -238,8 +255,32 @@ components:
           format: date-time
           pattern: 'MM/DD/YYYY HH24:MI:SS'
           description: Дата и время последнего обновления процесса
+        processStatus:
+          type: string
+          maxLength: 30
+          description: Статус процесса
 
     ProcessListResponse:
       type: array
       items:
         $ref: '#/components/schemas/ProcessResponse'
+
+    ProcessStatusResponse:
+      type: object
+      properties:
+        idProcessStatus:
+          type: string
+          pattern: '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'
+          minLength: 36
+          maxLength: 36
+        name:
+          type: string
+          maxLength: 30
+        description:
+          type: string
+          maxLength: 200
+
+    ProcessStatusListResponse:
+      type: array
+      items:
+        $ref: '#/components/schemas/ProcessStatusResponse'

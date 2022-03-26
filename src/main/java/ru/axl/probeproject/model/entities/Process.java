@@ -8,22 +8,26 @@ import java.util.UUID;
 
 @Entity
 @Data
-@Table(name="process")
+@Table(name="PROCESSES")
 public class Process {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
-    @Column(name = "id_process")
+    @Column(name = "ID_PROCESS")
     private UUID idProcess;
 
     @ManyToOne
-    @JoinColumn(name = "id_client")
+    @JoinColumn(name = "ID_CLIENT")
     private Client client;
 
-    @Column(name = "start_date")
+    @Column(name = "START_DATE")
     private OffsetDateTime startDate;
 
-    @Column(name = "last_update_date")
+    @Column(name = "LAST_UPDATE_DATE")
     private OffsetDateTime lastUpdateDate;
+
+    @ManyToOne
+    @JoinColumn(name = "ID_PROCESS_STATUS")
+    private ProcessStatus processStatus;
 
 }
