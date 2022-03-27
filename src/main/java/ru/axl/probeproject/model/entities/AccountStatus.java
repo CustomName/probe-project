@@ -8,19 +8,19 @@ import java.util.UUID;
 
 @Entity
 @Data
-@Table(name="CLIENTS")
-public class Client {
+@Table(name="ACCOUNT_STATUSES")
+public class AccountStatus {
 
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
-    @Column(name = "ID_CLIENT")
-    private UUID idClient;
+    @Column(name = "ID_ACCOUNT_STATUS")
+    private UUID idAccountStatus;
 
-    @Column(name="FIO", length=100, nullable=false)
-    private String fio;
+    @Column(name="NAME", length=30, nullable=false)
+    private String name;
 
-    @Column(name="INN", length=12, nullable=false, unique=true)
-    private String inn;
+    @Column(name="DESCRIPTION", length=200, nullable=false)
+    private String description;
 
 }

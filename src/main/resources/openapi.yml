@@ -13,6 +13,10 @@ tags:
     description: Клиенты
   - name: processes
     description: Процессы
+  - name: processStatuses
+    description: Статусы процесса
+  - name: accountStatuses
+    description: Статусы счета
 
 paths:
 
@@ -153,6 +157,23 @@ paths:
         500:
           $ref: '#/components/responses/500'
 
+  /account-statuses:
+    get:
+      tags:
+        - accountStatuses
+      summary: Получение списка всех возможных статусов счета
+      description: Получение списка всех возможных статусов счета
+      operationId: getAllAccountStatuses
+      responses:
+        200:
+          description: Успешное получение списка всех возможных статусов счета
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountStatusListResponse'
+        500:
+          $ref: '#/components/responses/500'
+
 components:
 
   responses:
@@ -284,3 +305,23 @@ components:
       type: array
       items:
         $ref: '#/components/schemas/ProcessStatusResponse'
+
+    AccountStatusResponse:
+      type: object
+      properties:
+        idAccountStatus:
+          type: string
+          pattern: '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'
+          minLength: 36
+          maxLength: 36
+        name:
+          type: string
+          maxLength: 30
+        description:
+          type: string
+          maxLength: 200
+
+    AccountStatusListResponse:
+      type: array
+      items:
+        $ref: '#/components/schemas/AccountStatusResponse'

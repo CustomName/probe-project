@@ -1,6 +1,7 @@
 package ru.axl.probeproject.model.entities;
 
 import lombok.Data;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.UUID;
@@ -11,7 +12,8 @@ import java.util.UUID;
 public class ProcessStatus {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     @Column(name = "ID_PROCESS_STATUS")
     private UUID idProcessStatus;
 
