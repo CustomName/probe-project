@@ -128,11 +128,42 @@ paths:
             maxLength: 36
       responses:
         201:
-          description: Успешное создание нового процесса
+          description: Успешное получение всех процессов клиента
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ProcessListResponse'
+        400:
+          $ref: '#/components/responses/400'
+        404:
+          $ref: '#/components/responses/404'
+        500:
+          $ref: '#/components/responses/500'
+
+  /accounts/clients/{idClient}:
+    get:
+      tags:
+        - accounts
+      summary: Все счета клиента
+      description: Все счета клиента
+      operationId: getAllClientAccounts
+      parameters:
+        - name: idClient
+          in: path
+          description: UUID клиента
+          required: true
+          schema:
+            type: string
+            pattern: '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'
+            minLength: 36
+            maxLength: 36
+      responses:
+        201:
+          description: Успешное получение всех счетов клиента
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountListResponse'
         400:
           $ref: '#/components/responses/400'
         404:
@@ -285,6 +316,34 @@ components:
       type: array
       items:
         $ref: '#/components/schemas/ProcessResponse'
+
+    AccountResponse:
+      type: object
+      properties:
+        idAccount:
+          type: string
+          pattern: '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'
+          minLength: 36
+          maxLength: 36
+        reservationDate:
+          type: string
+          format: date-time
+          pattern: 'MM/DD/YYYY HH24:MI:SS'
+          description: Дата и время резервирования счета
+        openingDate:
+          type: string
+          format: date-time
+          pattern: 'MM/DD/YYYY HH24:MI:SS'
+          description: Дата и время открытия счета
+        accountStatus:
+          type: string
+          maxLength: 30
+          description: Статус счета
+
+    AccountListResponse:
+      type: array
+      items:
+        $ref: '#/components/schemas/AccountResponse'
 
     ProcessStatusResponse:
       type: object
