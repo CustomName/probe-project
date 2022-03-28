@@ -1,0 +1,38 @@
+--PROCESS_STATUSES
+INSERT INTO PROCESS_STATUSES (ID_PROCESS_STATUS, NAME, DESCRIPTION)
+    VALUES (random_uuid(), 'NEW', 'Новый процесс');
+INSERT INTO PROCESS_STATUSES (ID_PROCESS_STATUS, NAME, DESCRIPTION)
+    VALUES (random_uuid(), 'COMPLIANCE_SUCCESS', 'Комплаенс проверка успешно выполнена');
+INSERT INTO PROCESS_STATUSES (ID_PROCESS_STATUS, NAME, DESCRIPTION)
+    VALUES (random_uuid(), 'COMPLIANCE_ERROR', 'Комплаенс проверка завершилось ошибкой');
+INSERT INTO PROCESS_STATUSES (ID_PROCESS_STATUS, NAME, DESCRIPTION)
+    VALUES (random_uuid(), 'OPENING', 'Открытие счета');
+INSERT INTO PROCESS_STATUSES (ID_PROCESS_STATUS, NAME, DESCRIPTION)
+    VALUES (random_uuid(), 'END_SUCCESS', 'Процесс завершен успешно');
+INSERT INTO PROCESS_STATUSES (ID_PROCESS_STATUS, NAME, DESCRIPTION)
+    VALUES (random_uuid(), 'END_ERROR', 'Процесс завершен с ошибкой');
+
+--ACCOUNT_STATUSES
+INSERT INTO ACCOUNT_STATUSES (ID_ACCOUNT_STATUS, NAME, DESCRIPTION)
+    VALUES (random_uuid(), 'RESERVING', 'Счет на резервировании');
+INSERT INTO ACCOUNT_STATUSES (ID_ACCOUNT_STATUS, NAME, DESCRIPTION)
+    VALUES (random_uuid(), 'OPENING', 'Счет на открытии');
+INSERT INTO ACCOUNT_STATUSES (ID_ACCOUNT_STATUS, NAME, DESCRIPTION)
+    VALUES (random_uuid(), 'REJECTED', 'Счет отклонен банком');
+INSERT INTO ACCOUNT_STATUSES (ID_ACCOUNT_STATUS, NAME, DESCRIPTION)
+    VALUES (random_uuid(), 'CANCELED', 'Счет отменен пользователем');
+INSERT INTO ACCOUNT_STATUSES (ID_ACCOUNT_STATUS, NAME, DESCRIPTION)
+    VALUES (random_uuid(), 'OPENED', 'Счет открыт');
+
+--CURRENCIES
+INSERT INTO CURRENCIES (ID_CURRENCY, CODE, ISO, NAME)
+    VALUES (random_uuid(), '810', 'RUB', 'Российский рубль');
+INSERT INTO CURRENCIES (ID_CURRENCY, CODE, ISO, NAME)
+    VALUES (random_uuid(), '840', 'USD', 'Доллар США');
+INSERT INTO CURRENCIES (ID_CURRENCY, CODE, ISO, NAME)
+    VALUES (random_uuid(), '978', 'EUR', 'Евро');
+
+--CLIENTS
+--Тестовые клиенты
+INSERT INTO CLIENTS (ID_CLIENT, FIO, INN) VALUES (random_uuid(), 'Пупов Пуп Пупович', '111111111111');
+INSERT INTO CLIENTS (ID_CLIENT, FIO, INN) VALUES (random_uuid(), 'Пупова Пупа Пуповна', '111111111112');
