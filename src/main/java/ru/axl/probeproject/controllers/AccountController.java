@@ -5,12 +5,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import ru.axl.probeproject.api.AccountsApi;
+import ru.axl.probeproject.model.AccountRequest;
 import ru.axl.probeproject.model.AccountResponse;
 import ru.axl.probeproject.services.AccountService;
 
 import java.util.List;
 import java.util.UUID;
 
+import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.ResponseEntity.ok;
 
 @Slf4j
@@ -25,6 +27,13 @@ public class AccountController implements AccountsApi {
         List<AccountResponse> accounts = accountService.findAllClientAccounts(UUID.fromString(idClient));
 
         return ok(accounts);
+    }
+
+    @Override
+    public ResponseEntity<AccountResponse> postAccountReserve(AccountRequest accountRequest) {
+        AccountResponse account = accountService.createAccount(accountRequest);
+
+        return new ResponseEntity<>(account, CREATED);
     }
 
 }

@@ -142,6 +142,33 @@ paths:
         500:
           $ref: '#/components/responses/500'
 
+  /accounts/reserve:
+    post:
+      tags:
+        - accounts
+      summary: Резервирование нового счета
+      description: Резервирование нового счета
+      operationId: postAccountReserve
+      requestBody:
+        description: Запрос для резервирования счета
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/AccountRequest'
+      responses:
+        201:
+          description: Успешное резервирование счета
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountResponse'
+        400:
+          $ref: '#/components/responses/400'
+        404:
+          $ref: '#/components/responses/404'
+        500:
+          $ref: '#/components/responses/500'
+
   /accounts/clients/{idClient}:
     get:
       tags:
@@ -336,6 +363,18 @@ components:
       items:
         $ref: '#/components/schemas/ProcessResponse'
 
+    AccountRequest:
+      type: object
+      properties:
+        idClient:
+          type: string
+          pattern: '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'
+          minLength: 36
+          maxLength: 36
+        code:
+          type: string
+          maxLength: 3
+
     AccountResponse:
       type: object
       properties:
@@ -344,6 +383,17 @@ components:
           pattern: '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'
           minLength: 36
           maxLength: 36
+        number:
+          type: string
+          maxLength: 20
+          description: Номер счета
+        currencyIso:
+          type: string
+          maxLength: 3
+          description: ISO валюты
+        clientFio:
+          type: string
+          maxLength: 100
         reservationDate:
           type: string
           format: date-time

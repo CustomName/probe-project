@@ -11,6 +11,8 @@ import java.util.List;
 public interface AccountMapper {
 
     @Mapping(target = "accountStatus", source = "accountStatus.name")
+    @Mapping(target = "currencyIso", source = "currency.iso")
+    @Mapping(target = "clientFio", source = "client.fio")
     AccountResponse toAccountResponse(Account account);
 
     List<AccountResponse> toAccountResponseList(List<Account> account);

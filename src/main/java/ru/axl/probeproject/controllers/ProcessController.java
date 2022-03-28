@@ -12,6 +12,7 @@ import ru.axl.probeproject.services.ProcessService;
 import java.util.List;
 import java.util.UUID;
 
+import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.ResponseEntity.ok;
 
 @Slf4j
@@ -32,7 +33,7 @@ public class ProcessController implements ProcessesApi {
     public ResponseEntity<ProcessResponse> postProcess(ProcessRequest processRequest) {
         ProcessResponse processResponse = processService.createProcess(processRequest);
 
-        return ok(processResponse);
+        return new ResponseEntity<>(processResponse, CREATED);
     }
 
 }

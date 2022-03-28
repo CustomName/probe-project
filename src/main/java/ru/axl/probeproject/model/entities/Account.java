@@ -18,6 +18,13 @@ public class Account {
     @Column(name = "ID_ACCOUNT")
     private UUID idAccount;
 
+    @Column(name="NUMBER", length=20, nullable=false)
+    private String number;
+
+    @ManyToOne
+    @JoinColumn(name = "ID_CURRENCY")
+    private Currency currency;
+
     @ManyToOne
     @JoinColumn(name = "ID_CLIENT")
     private Client client;
