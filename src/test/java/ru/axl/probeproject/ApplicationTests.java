@@ -3,10 +3,7 @@ package ru.axl.probeproject;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import ru.axl.probeproject.controllers.AdminController;
-import ru.axl.probeproject.controllers.ClientController;
-import ru.axl.probeproject.controllers.ProcessController;
-import ru.axl.probeproject.controllers.ProcessStatusController;
+import ru.axl.probeproject.controllers.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -21,6 +18,12 @@ class ApplicationTests {
 	private ProcessController processController;
 	@Autowired
 	private ProcessStatusController processStatusController;
+	@Autowired
+	private AccountController accountController;
+	@Autowired
+	private AccountStatusController accountStatusController;
+	@Autowired
+	private DictionaryController dictionaryController;
 
 	@Test
 	void contextLoads() {
@@ -28,6 +31,9 @@ class ApplicationTests {
 		assertThat(clientController).isNotNull();
 		assertThat(processController).isNotNull();
 		assertThat(processStatusController).isNotNull();
+		assertThat(accountController).isNotNull();
+		assertThat(accountStatusController).isNotNull();
+		assertThat(dictionaryController).isNotNull();
 	}
 
 }

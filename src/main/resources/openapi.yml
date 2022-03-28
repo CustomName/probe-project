@@ -17,6 +17,8 @@ tags:
     description: Статусы процесса
   - name: accountStatuses
     description: Статусы счета
+  - name: currencies
+    description: Справочник валют
 
 paths:
 
@@ -205,6 +207,23 @@ paths:
         500:
           $ref: '#/components/responses/500'
 
+  /dictionaries/currencies:
+    get:
+      tags:
+        - currencies
+      summary: Получение кодов валют
+      description: Получение кодов валют
+      operationId: getCurrencies
+      responses:
+        200:
+          description: Успешное получение кодов валют
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CurrencyListResponse'
+        500:
+          $ref: '#/components/responses/500'
+
 components:
 
   responses:
@@ -384,3 +403,26 @@ components:
       type: array
       items:
         $ref: '#/components/schemas/AccountStatusResponse'
+
+    CurrencyResponse:
+      type: object
+      properties:
+        idCurrency:
+          type: string
+          pattern: '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'
+          minLength: 36
+          maxLength: 36
+        code:
+          type: string
+          maxLength: 3
+        iso:
+          type: string
+          maxLength: 3
+        name:
+          type: string
+          maxLength: 30
+
+    CurrencyListResponse:
+      type: array
+      items:
+        $ref: '#/components/schemas/CurrencyResponse'
