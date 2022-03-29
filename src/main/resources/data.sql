@@ -36,4 +36,3 @@ INSERT INTO CURRENCIES (ID_CURRENCY, CODE, ISO, NAME)
 --Тестовые клиенты
 INSERT INTO CLIENTS (ID_CLIENT, FIO, INN) VALUES (random_uuid(), 'Пупов Пуп Пупович', '111111111111');
 INSERT INTO CLIENTS (ID_CLIENT, FIO, INN) VALUES (random_uuid(), 'Пупова Пупа Пуповна', '111111111112');
-INSERT INTO CLIENTS (ID_CLIENT, FIO, INN) VALUES (random_uuid(), 'Иванов Иван Иванович', '111111111113');
