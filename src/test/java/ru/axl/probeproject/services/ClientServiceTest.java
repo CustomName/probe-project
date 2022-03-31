@@ -7,6 +7,7 @@ import ru.axl.probeproject.mapper.ClientMapper;
 import ru.axl.probeproject.model.ClientResponse;
 import ru.axl.probeproject.model.entities.Client;
 import ru.axl.probeproject.repositories.ClientRepository;
+import ru.axl.probeproject.services.base.BaseServiceTest;
 import ru.axl.probeproject.services.impl.ClientServiceImpl;
 
 import java.util.List;

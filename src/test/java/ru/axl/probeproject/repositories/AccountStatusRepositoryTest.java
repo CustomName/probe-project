@@ -3,6 +3,7 @@ package ru.axl.probeproject.repositories;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import ru.axl.probeproject.model.entities.AccountStatus;
+import ru.axl.probeproject.repositories.base.BaseRepositoryTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

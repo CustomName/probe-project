@@ -7,6 +7,7 @@ import ru.axl.probeproject.mapper.CurrencyMapper;
 import ru.axl.probeproject.model.CurrencyResponse;
 import ru.axl.probeproject.model.entities.Currency;
 import ru.axl.probeproject.repositories.CurrencyRepository;
+import ru.axl.probeproject.services.base.BaseServiceTest;
 import ru.axl.probeproject.services.impl.CurrencyServiceImpl;
 
 import java.util.List;

@@ -14,6 +14,7 @@ import ru.axl.probeproject.repositories.AccountRepository;
 import ru.axl.probeproject.repositories.AccountStatusRepository;
 import ru.axl.probeproject.repositories.ClientRepository;
 import ru.axl.probeproject.repositories.CurrencyRepository;
+import ru.axl.probeproject.services.base.BaseServiceTest;
 import ru.axl.probeproject.services.impl.AccountServiceImpl;
 
 import java.util.List;

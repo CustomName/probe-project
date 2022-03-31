@@ -1,4 +1,4 @@
-package ru.axl.probeproject.repositories;
+package ru.axl.probeproject.repositories.base;
 
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;

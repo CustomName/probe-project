@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import javax.servlet.http.HttpServletResponse;
 import java.time.OffsetDateTime;
 
+import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 import static ru.axl.probeproject.utils.Utils.getNowOffsetDateTime;
 
 @Slf4j
@@ -18,12 +19,23 @@ import static ru.axl.probeproject.utils.Utils.getNowOffsetDateTime;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(ApiException.class)
-    public Error handle(HttpServletResponse res, ApiException ex){
+    public Error handleApiException(HttpServletResponse res, ApiException ex){
         log.error(ex.getMessage());
         res.setStatus(ex.getApiError().getHttpCode());
 
         return Error.builder()
                 .errorCode(ex.getApiError().getCode())
+                .timestamp(getNowOffsetDateTime())
+                .build();
+    }
+
+    @ExceptionHandler(Exception.class)
+    public Error handleException(HttpServletResponse res, Exception ex){
+        log.error(ex.getMessage());
+        res.setStatus(INTERNAL_SERVER_ERROR.value());
+
+        return Error.builder()
+                .errorCode("INTERNAL_SERVER_ERROR")
                 .timestamp(getNowOffsetDateTime())
                 .build();
     }

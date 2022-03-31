@@ -7,6 +7,7 @@ import ru.axl.probeproject.mapper.AccountStatusMapper;
 import ru.axl.probeproject.model.AccountStatusResponse;
 import ru.axl.probeproject.model.entities.AccountStatus;
 import ru.axl.probeproject.repositories.AccountStatusRepository;
+import ru.axl.probeproject.services.base.BaseServiceTest;
 import ru.axl.probeproject.services.impl.AccountStatusServiceImpl;
 
 import java.util.List;
@@ -15,7 +16,7 @@ import java.util.UUID;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
-class AccountStatusServiceTest extends BaseServiceTest{
+class AccountStatusServiceTest extends BaseServiceTest {
 
     @InjectMocks
     private AccountStatusServiceImpl accountStatusService;

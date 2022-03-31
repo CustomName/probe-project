@@ -7,6 +7,7 @@ import ru.axl.probeproject.mapper.ProcessStatusMapper;
 import ru.axl.probeproject.model.ProcessStatusResponse;
 import ru.axl.probeproject.model.entities.ProcessStatus;
 import ru.axl.probeproject.repositories.ProcessStatusRepository;
+import ru.axl.probeproject.services.base.BaseServiceTest;
 import ru.axl.probeproject.services.impl.ProcessStatusServiceImpl;
 
 import java.util.List;

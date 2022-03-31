@@ -1,4 +1,4 @@
-package ru.axl.probeproject.services;
+package ru.axl.probeproject.services.base;
 
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.test.context.junit.jupiter.SpringExtension;

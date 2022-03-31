@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.jdbc.Sql;
 import ru.axl.probeproject.model.entities.Client;
 import ru.axl.probeproject.model.entities.Process;
+import ru.axl.probeproject.repositories.base.BaseRepositoryTest;
 
 import java.util.List;
 
