@@ -9,7 +9,7 @@ spring:
   jpa:
     spring.jpa.database-platform: org.hibernate.dialect.H2Dialect
     defer-datasource-initialization: true
-    show-sql: true
+    show-sql: false
   h2:
     console.enabled: true
   mvc:
@@ -22,3 +22,7 @@ springdoc:
   swagger-ui:
     enabled: true
     path: /probe-project/swagger-ui.html
+
+scheduler-config:
+  fixed-delay: 10000
+  initial-delay: 10000

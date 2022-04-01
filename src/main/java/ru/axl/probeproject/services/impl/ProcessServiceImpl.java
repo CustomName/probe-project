@@ -40,10 +40,12 @@ public class ProcessServiceImpl implements ProcessService {
         log.info("Создание нового процесса для клиента с инн = {}", processRequest.getClientInn());
 
         ProcessStatus processStatusNew = processStatusRepo.findByName(NEW.name()).orElseThrow(() ->
-                new ApiException(PROCESS_STATUS_NOT_FOUND, String.format("Не найден статус процесса с name = '%s'", NEW.name())));
+                new ApiException(PROCESS_STATUS_NOT_FOUND,
+                        String.format("Не найден статус процесса с name = '%s'", NEW.name())));
 
         Client client = clientRepo.findByInn(processRequest.getClientInn()).orElseThrow(() ->
-                new ApiException(CLIENT_NOT_FOUND, String.format("Не найден клиент с инн = %s", processRequest.getClientInn())));
+                new ApiException(CLIENT_NOT_FOUND,
+                        String.format("Не найден клиент с инн = %s", processRequest.getClientInn())));
         Process process = new Process();
         process.setClient(client);
         process.setStartDate(getNowOffsetDateTime());
