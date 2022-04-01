@@ -17,11 +17,11 @@ import ru.axl.probeproject.services.ProcessService;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
-import static ru.axl.probeproject.exceptions.ApiError.CLIENT_NOT_FOUND;
-import static ru.axl.probeproject.exceptions.ApiError.PROCESS_STATUS_NOT_FOUND;
-import static ru.axl.probeproject.model.enums.ProcessStatusEnum.NEW;
+import static ru.axl.probeproject.exceptions.ApiError.*;
+import static ru.axl.probeproject.model.enums.ProcessStatusEnum.*;
 import static ru.axl.probeproject.utils.Utils.getNowOffsetDateTime;
 
 @Slf4j
@@ -34,18 +34,30 @@ public class ProcessServiceImpl implements ProcessService {
     private final ProcessStatusRepository processStatusRepo;
     private final ProcessMapper processMapper;
 
+    private final Set<String> notTerminalStatuses = Set.of(
+        NEW.name(), COMPLIANCE_SUCCESS.name(), COMPLIANCE_ERROR.name(), OPENING.name()
+    );
+
     @Override
     @Transactional
     public ProcessResponse createProcess(ProcessRequest processRequest) {
         log.info("Создание нового процесса для клиента с инн = {}", processRequest.getClientInn());
 
+        Client client = clientRepo.findByInn(processRequest.getClientInn()).orElseThrow(() ->
+                new ApiException(CLIENT_NOT_FOUND,
+                        String.format("Не найден клиент с инн = %s", processRequest.getClientInn())));
+
+        List<Process> notTerminalProcesses = processRepo.findAllByIdClientInStatuses(client.getIdClient(),
+                notTerminalStatuses);
+        if(!notTerminalProcesses.isEmpty()){
+            throw new ApiException(CLIENT_HAS_NOT_TERMINATED_PROCESSES,
+                    String.format("У клиента есть незавершенные процессы:\n %s", notTerminalProcesses));
+        }
+
         ProcessStatus processStatusNew = processStatusRepo.findByName(NEW.name()).orElseThrow(() ->
                 new ApiException(PROCESS_STATUS_NOT_FOUND,
                         String.format("Не найден статус процесса с name = '%s'", NEW.name())));
 
-        Client client = clientRepo.findByInn(processRequest.getClientInn()).orElseThrow(() ->
-                new ApiException(CLIENT_NOT_FOUND,
-                        String.format("Не найден клиент с инн = %s", processRequest.getClientInn())));
         Process process = new Process();
         process.setClient(client);
         process.setStartDate(getNowOffsetDateTime());

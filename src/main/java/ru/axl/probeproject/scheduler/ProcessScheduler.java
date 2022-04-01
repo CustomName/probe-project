@@ -32,7 +32,11 @@ public class ProcessScheduler {
     @Scheduled(fixedDelayString = "${scheduler-config.fixed-delay}",
             initialDelayString = "${scheduler-config.initial-delay}")
     public void scheduleProcessStatus(){
-        List<Process> processes = processRepo.findAllWithStatusAndLastUpdateDateBefore(NEW.name(),
+        ProcessStatus newStatus = processStatusRepo.findByName(NEW.name()).orElseThrow(() ->
+                new ApiException(PROCESS_STATUS_NOT_FOUND,
+                        String.format("Не найден статус процесса с name = '%s'", NEW.name())));
+
+        List<Process> processes = processRepo.findAllWithStatusAndLastUpdateDateBefore(newStatus,
                 getNowOffsetDateTime().minusSeconds(10));
 
         processes.forEach(process -> {
