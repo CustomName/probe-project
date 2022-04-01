@@ -7,8 +7,6 @@ servers:
   - url: http://localhost
 
 tags:
-  - name: admin
-    description: Администрирование
   - name: clients
     description: Клиенты
   - name: processes
@@ -21,21 +19,6 @@ tags:
     description: Справочник валют
 
 paths:
-
-  /admin/ping:
-    get:
-      tags:
-        - admin
-      summary: Проверка доступности сервиса
-      description: Проверка доступности сервиса
-      operationId: ping
-      responses:
-        200:
-          description: Успешный ping
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PingResponse'
 
   /clients:
     get:
@@ -297,14 +280,6 @@ components:
           format: date-time
           pattern: 'MM/DD/YYYY HH24:MI:SS'
           description: Дата и время ошибки
-
-    PingResponse:
-      type: object
-      properties:
-        result:
-          type: string
-        message:
-          type: string
 
     ClientResponse:
       type: object

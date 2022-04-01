@@ -11,8 +11,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 class ApplicationTests {
 
 	@Autowired
-	private AdminController adminController;
-	@Autowired
 	private ClientController clientController;
 	@Autowired
 	private ProcessController processController;
@@ -27,7 +25,6 @@ class ApplicationTests {
 
 	@Test
 	void contextLoads() {
-		assertThat(adminController).isNotNull();
 		assertThat(clientController).isNotNull();
 		assertThat(processController).isNotNull();
 		assertThat(processStatusController).isNotNull();
