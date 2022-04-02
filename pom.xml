@@ -23,6 +23,7 @@
 		<jackson-version>2.12.6</jackson-version>
 		<jackson-databind-nullable>0.2.1</jackson-databind-nullable>
 		<javax-validation-version>2.0.1.Final</javax-validation-version>
+		<hibernate-validator-version>5.1.0.Final</hibernate-validator-version>
 		<mapstruct-version>1.4.1.Final</mapstruct-version>
 		<mapstruct-binding-version>0.2.0</mapstruct-binding-version>
 	</properties>
@@ -85,6 +86,11 @@
 			<groupId>javax.validation</groupId>
 			<artifactId>validation-api</artifactId>
 			<version>${javax-validation-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>${hibernate-validator-version}</version>
 		</dependency>
 
 		<dependency>
