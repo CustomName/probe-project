@@ -10,6 +10,6 @@ public interface AccountService {
 
     List<AccountResponse> findAllClientAccounts(UUID idClient);
 
-    AccountResponse createAccount(AccountRequest accountRequest);
+    AccountResponse reserveAccount(AccountRequest accountRequest);
 
 }

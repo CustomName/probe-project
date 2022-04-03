@@ -2,7 +2,7 @@ package ru.axl.probeproject.model.enums;
 
 public enum AccountStatusEnum {
 
-    RESERVING,
+    RESERVED,
     OPENING,
     REJECTED,
     CANCELED,

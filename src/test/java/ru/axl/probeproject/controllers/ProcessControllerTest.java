@@ -68,9 +68,9 @@ class ProcessControllerTest extends BaseControllerTest {
 
     @Test
     void postProcess() throws Exception {
-        final String clientInn = "111111111111";
+        final String idClient = UUID.randomUUID().toString();
         ProcessResponse processResponse = new ProcessResponse().idProcess(UUID.randomUUID().toString());
-        ProcessRequest processRequest = new ProcessRequest().clientInn(clientInn);
+        ProcessRequest processRequest = new ProcessRequest().idClient(idClient);
 
         when(processService.createProcess(processRequest)).thenReturn(processResponse);
 

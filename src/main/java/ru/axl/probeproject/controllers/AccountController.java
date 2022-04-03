@@ -31,7 +31,7 @@ public class AccountController implements AccountsApi {
 
     @Override
     public ResponseEntity<AccountResponse> postAccountReserve(AccountRequest accountRequest) {
-        AccountResponse account = accountService.createAccount(accountRequest);
+        AccountResponse account = accountService.reserveAccount(accountRequest);
 
         return new ResponseEntity<>(account, CREATED);
     }

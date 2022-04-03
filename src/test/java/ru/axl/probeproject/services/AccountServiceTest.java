@@ -24,7 +24,7 @@ import java.util.UUID;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
-import static ru.axl.probeproject.model.enums.AccountStatusEnum.RESERVING;
+import static ru.axl.probeproject.model.enums.AccountStatusEnum.RESERVED;
 
 class AccountServiceTest extends BaseServiceTest {
 
@@ -71,7 +71,7 @@ class AccountServiceTest extends BaseServiceTest {
     void shouldCreateAccount() {
         final Account account = getAccount(uuidAccount1);
         when(clientRepo.findByIdClient(uuidClient)).thenReturn(Optional.of(getClient()));
-        when(accountStatusRepo.findByName(RESERVING.name())).thenReturn(Optional.of(getAccountStatus()));
+        when(accountStatusRepo.findByName(RESERVED.name())).thenReturn(Optional.of(getAccountStatus()));
         when(currencyRepo.findByCode(currencyCode)).thenReturn(Optional.of(getCurrency()));
         when(accountRepo.save(any())).thenReturn(account);
         when(accountMapper.toAccountResponse(account)).thenReturn(getAccountResponse(uuidAccountResponse1));
@@ -79,7 +79,7 @@ class AccountServiceTest extends BaseServiceTest {
         AccountRequest accountRequest = new AccountRequest()
                 .idClient(uuidClient.toString())
                 .code(currencyCode);
-        AccountResponse accountResponse = accountService.createAccount(accountRequest);
+        AccountResponse accountResponse = accountService.reserveAccount(accountRequest);
 
         assertThat(accountResponse).isNotNull();
     }

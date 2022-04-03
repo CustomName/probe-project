@@ -305,10 +305,11 @@ components:
     ProcessRequest:
       type: object
       properties:
-        clientInn:
+        idClient:
           type: string
-          minLength: 12
-          maxLength: 12
+          pattern: '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'
+          minLength: 36
+          maxLength: 36
 
     ProcessResponse:
       type: object

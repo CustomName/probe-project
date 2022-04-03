@@ -70,7 +70,7 @@ class AccountControllerTest extends BaseControllerTest {
         AccountRequest accountRequest = new AccountRequest()
                 .idClient(UUID.randomUUID().toString());
 
-        when(accountService.createAccount(accountRequest)).thenReturn(accountResponse);
+        when(accountService.reserveAccount(accountRequest)).thenReturn(accountResponse);
 
         MockHttpServletResponse response = mvc.perform(post("/accounts/reserve")
                         .contentType(APPLICATION_JSON)

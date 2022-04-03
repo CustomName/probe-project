@@ -17,7 +17,7 @@ public enum ProcessStatusEnum {
     /**
      * Промежуточный статус
      */
-    OPENING,
+    ACCOUNT_PROCESSING,
     /**
      * Конечный статус
      */

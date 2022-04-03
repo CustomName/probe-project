@@ -16,12 +16,16 @@ import ru.axl.probeproject.repositories.AccountStatusRepository;
 import ru.axl.probeproject.repositories.ClientRepository;
 import ru.axl.probeproject.repositories.CurrencyRepository;
 import ru.axl.probeproject.services.AccountService;
+import ru.axl.probeproject.services.ProcessService;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.UUID;
 
 import static ru.axl.probeproject.exceptions.ApiError.*;
-import static ru.axl.probeproject.model.enums.AccountStatusEnum.RESERVING;
+import static ru.axl.probeproject.model.enums.AccountStatusEnum.RESERVED;
+import static ru.axl.probeproject.model.enums.ProcessStatusEnum.ACCOUNT_PROCESSING;
+import static ru.axl.probeproject.model.enums.ProcessStatusEnum.COMPLIANCE_SUCCESS;
 import static ru.axl.probeproject.utils.Utils.getNowOffsetDateTime;
 
 @Slf4j
@@ -33,6 +37,7 @@ public class AccountServiceImpl implements AccountService {
     private final ClientRepository clientRepo;
     private final AccountStatusRepository accountStatusRepo;
     private final CurrencyRepository currencyRepo;
+    private final ProcessService processService;
     private final AccountMapper accountMapper;
 
     @Override
@@ -47,16 +52,19 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public AccountResponse createAccount(AccountRequest accountRequest) {
+    @Transactional
+    public AccountResponse reserveAccount(AccountRequest accountRequest) {
         log.info("Резервирование счета:\n {}", accountRequest);
         UUID idClient = UUID.fromString(accountRequest.getIdClient());
         log.info("Поиск клиента по idClient = {}", idClient);
         Client client = clientRepo.findByIdClient(idClient).orElseThrow(() ->
                 new ApiException(CLIENT_NOT_FOUND, String.format("Не найден клиент с idClient = \"%s\"", idClient)));
 
-        AccountStatus accountStatusReserve = accountStatusRepo.findByName(RESERVING.name()).orElseThrow(() ->
+        AccountStatus accountStatusReserve = accountStatusRepo.findByName(RESERVED.name()).orElseThrow(() ->
                 new ApiException(ACCOUNT_STATUS_NOT_FOUND,
-                String.format("Не найден статус счета с name = \"%s\"", RESERVING.name())));
+                        String.format("Не найден статус счета с name = \"%s\"", RESERVED.name())));
+
+        processService.changeProcessStatusByClient(client, COMPLIANCE_SUCCESS, ACCOUNT_PROCESSING);
 
         Currency currency = currencyRepo.findByCode(accountRequest.getCode()).orElseThrow(() ->
                 new ApiException(CURRENCY_NOT_FOUND,
@@ -71,7 +79,7 @@ public class AccountServiceImpl implements AccountService {
 
         Account savedAccount = accountRepo.save(account);
         AccountResponse accountResponse = accountMapper.toAccountResponse(savedAccount);
-        log.info("Счет отправлен на резервирование:\n {}", accountResponse);
+        log.info("Счет зарезервирован:\n {}", accountResponse);
 
         return accountResponse;
     }

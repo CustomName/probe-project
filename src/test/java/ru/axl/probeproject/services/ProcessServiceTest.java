@@ -57,7 +57,7 @@ class ProcessServiceTest extends BaseServiceTest {
         when(processMapper.toProcessResponse(process)).thenReturn(processResponse);
 
         ProcessRequest processRequest = new ProcessRequest()
-                .clientInn(client.getInn());
+                .idClient(client.getIdClient().toString());
         ProcessResponse resp = processService.createProcess(processRequest);
 
         assertThat(resp).isNotNull();
