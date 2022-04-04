@@ -30,6 +30,9 @@ class AccountServiceTest extends BaseServiceTest {
 
     @InjectMocks
     private AccountServiceImpl accountService;
+
+    @Mock
+    private ProcessService processService;
     
     @Mock
     private AccountRepository accountRepo;

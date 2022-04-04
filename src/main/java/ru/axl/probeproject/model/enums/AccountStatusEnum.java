@@ -5,7 +5,6 @@ public enum AccountStatusEnum {
     RESERVED,
     OPENING,
     REJECTED,
-    CANCELED,
     OPENED;
 
 }

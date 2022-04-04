@@ -51,7 +51,7 @@ class ProcessServiceTest extends BaseServiceTest {
         ProcessStatus processStatus = getProcessStatus();
         Process process = getProcess(uuidProcess1);
         ProcessResponse processResponse = getProcessResponse(uuidProcess1);
-        when(clientRepo.findByInn(client.getInn())).thenReturn(Optional.of(client));
+        when(clientRepo.findByIdClient(client.getIdClient())).thenReturn(Optional.of(client));
         when(processStatusRepo.findByName(processStatus.getName())).thenReturn(Optional.of(processStatus));
         when(processRepo.save(any())).thenReturn(process);
         when(processMapper.toProcessResponse(process)).thenReturn(processResponse);
