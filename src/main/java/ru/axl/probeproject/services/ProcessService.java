@@ -3,6 +3,7 @@ package ru.axl.probeproject.services;
 import ru.axl.probeproject.model.ProcessRequest;
 import ru.axl.probeproject.model.ProcessResponse;
 import ru.axl.probeproject.model.entities.Client;
+import ru.axl.probeproject.model.entities.Process;
 import ru.axl.probeproject.model.enums.ProcessStatusEnum;
 
 import java.util.List;
@@ -16,5 +17,7 @@ public interface ProcessService {
 
     void changeProcessStatusByClient(Client client, ProcessStatusEnum oldProcessStatus,
                                      ProcessStatusEnum newProcessStatus);
+
+    Process checkProcessActiveStatus(Client client, ProcessStatusEnum processStatus);
 
 }

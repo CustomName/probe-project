@@ -21,10 +21,6 @@ public enum ProcessStatusEnum {
     /**
      * Конечный статус
      */
-    END_SUCCESS,
-    /**
-     * Конечный статус
-     */
-    END_ERROR;
+    DONE;
 
 }

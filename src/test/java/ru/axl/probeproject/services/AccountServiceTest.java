@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import ru.axl.probeproject.mapper.AccountMapper;
-import ru.axl.probeproject.model.AccountRequest;
+import ru.axl.probeproject.model.AccountReserveRequest;
 import ru.axl.probeproject.model.AccountResponse;
 import ru.axl.probeproject.model.entities.Account;
 import ru.axl.probeproject.model.entities.AccountStatus;
@@ -79,7 +79,7 @@ class AccountServiceTest extends BaseServiceTest {
         when(accountRepo.save(any())).thenReturn(account);
         when(accountMapper.toAccountResponse(account)).thenReturn(getAccountResponse(uuidAccountResponse1));
 
-        AccountRequest accountRequest = new AccountRequest()
+        AccountReserveRequest accountRequest = new AccountReserveRequest()
                 .idClient(uuidClient.toString())
                 .code(currencyCode);
         AccountResponse accountResponse = accountService.reserveAccount(accountRequest);

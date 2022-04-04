@@ -1,6 +1,7 @@
 package ru.axl.probeproject.services;
 
-import ru.axl.probeproject.model.AccountRequest;
+import ru.axl.probeproject.model.AccountOpenRequest;
+import ru.axl.probeproject.model.AccountReserveRequest;
 import ru.axl.probeproject.model.AccountResponse;
 
 import java.util.List;
@@ -10,6 +11,8 @@ public interface AccountService {
 
     List<AccountResponse> findAllClientAccounts(UUID idClient);
 
-    AccountResponse reserveAccount(AccountRequest accountRequest);
+    AccountResponse reserveAccount(AccountReserveRequest accountRequest);
+
+    List<AccountResponse> openAccounts(AccountOpenRequest accountRequest);
 
 }

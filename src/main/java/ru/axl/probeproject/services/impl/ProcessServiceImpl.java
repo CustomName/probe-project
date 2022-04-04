@@ -81,11 +81,21 @@ public class ProcessServiceImpl implements ProcessService {
     @Transactional
     public void changeProcessStatusByClient(Client client, ProcessStatusEnum oldProcessStatus,
                                             ProcessStatusEnum newProcessStatus) {
-        ProcessStatus processStatus = getProcessStatus(newProcessStatus);
+        final ProcessStatus processStatus = getProcessStatus(newProcessStatus);
+
+        Process activeProcess = checkProcessActiveStatus(client, oldProcessStatus);
+
+        activeProcess.setLastUpdateDate(getNowOffsetDateTime());
+        activeProcess.setProcessStatus(processStatus);
+        processRepo.save(activeProcess);
+    }
+
+    @Override
+    public Process checkProcessActiveStatus(Client client, ProcessStatusEnum processStatus){
         List<Process> processes = processRepo.findAllByIdClient(client.getIdClient());
 
         List<Process> activeProcesses = processes.stream()
-                .filter(process -> process.getProcessStatus().getName().equals(oldProcessStatus.name()))
+                .filter(process -> process.getProcessStatus().getName().equals(processStatus.name()))
                 .collect(toList());
 
         if(activeProcesses.size() == 0){
@@ -97,10 +107,7 @@ public class ProcessServiceImpl implements ProcessService {
                     String.format("У клиента более 1 активного процесса:\n%s", activeProcesses));
         }
 
-        Process processWithNewStatus = activeProcesses.get(0);
-        processWithNewStatus.setLastUpdateDate(getNowOffsetDateTime());
-        processWithNewStatus.setProcessStatus(processStatus);
-        processRepo.save(processWithNewStatus);
+        return activeProcesses.get(0);
     }
 
     private ProcessStatus getProcessStatus(ProcessStatusEnum newProcessStatus){
