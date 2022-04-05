@@ -7,7 +7,7 @@ import ru.axl.probeproject.model.entities.Account;
 
 import java.util.List;
 
-@Mapper(uses = {UuidMapper.class})
+@Mapper(uses = {UuidMapper.class, OffsetDateTimeMapper.class})
 public interface AccountMapper {
 
     @Mapping(target = "accountStatus", source = "accountStatus.name")

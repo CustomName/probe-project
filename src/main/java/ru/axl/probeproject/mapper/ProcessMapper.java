@@ -7,7 +7,7 @@ import ru.axl.probeproject.model.entities.Process;
 
 import java.util.List;
 
-@Mapper(uses = {UuidMapper.class})
+@Mapper(uses = {UuidMapper.class, OffsetDateTimeMapper.class})
 public interface ProcessMapper {
 
     @Mapping(target = "processStatus", source = "processStatus.name")
