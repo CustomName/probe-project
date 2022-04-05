@@ -10,7 +10,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import ru.axl.probeproject.controllers.base.BaseControllerTest;
 import ru.axl.probeproject.exceptions.GlobalExceptionHandler;
-import ru.axl.probeproject.model.AccountRequest;
+import ru.axl.probeproject.model.AccountReserveRequest;
 import ru.axl.probeproject.model.AccountResponse;
 import ru.axl.probeproject.services.AccountService;
 
@@ -67,10 +67,10 @@ class AccountControllerTest extends BaseControllerTest {
     void whenPostAccountReserve_thenStatus200() throws Exception {
         AccountResponse accountResponse = new AccountResponse()
                 .idAccount(UUID.randomUUID().toString());
-        AccountRequest accountRequest = new AccountRequest()
+        AccountReserveRequest accountRequest = new AccountReserveRequest()
                 .idClient(UUID.randomUUID().toString());
 
-        when(accountService.createAccount(accountRequest)).thenReturn(accountResponse);
+        when(accountService.reserveAccount(accountRequest)).thenReturn(accountResponse);
 
         MockHttpServletResponse response = mvc.perform(post("/accounts/reserve")
                         .contentType(APPLICATION_JSON)

@@ -14,12 +14,12 @@ class AccountStatusRepositoryTest extends BaseRepositoryTest {
 
     @Test
     void shouldFindByName() {
-        final String accountStatusName = "RESERVING";
+        final String accountStatusName = "RESERVED";
         AccountStatus accountStatus = accountStatusRepo.findByName(accountStatusName).orElseThrow();
 
         assertThat(accountStatus).isNotNull();
         assertThat(accountStatus.getName()).isEqualTo(accountStatusName);
-        assertThat(accountStatus.getDescription()).isEqualTo("Счет на резервировании");
+        assertThat(accountStatus.getDescription()).isEqualTo("Счет зарезервирован");
     }
 
 }

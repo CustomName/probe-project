@@ -26,7 +26,7 @@ public class GlobalExceptionHandler {
 
         return Error.builder()
                 .errorCode(ex.getApiError().getCode())
-                .message("")
+                .message(ex.getApiError().getMessage())
                 .timestamp(getNowOffsetDateTime())
                 .build();
     }

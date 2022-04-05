@@ -137,7 +137,7 @@ paths:
         content:
           'application/json':
             schema:
-              $ref: '#/components/schemas/AccountRequest'
+              $ref: '#/components/schemas/AccountReserveRequest'
       responses:
         201:
           description: Успешное резервирование счета
@@ -145,6 +145,33 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/AccountResponse'
+        400:
+          $ref: '#/components/responses/400'
+        404:
+          $ref: '#/components/responses/404'
+        500:
+          $ref: '#/components/responses/500'
+
+  /accounts/open:
+    patch:
+      tags:
+        - accounts
+      summary: Открытие зарезервированных счетов
+      description: Открытие зарезервированных счетов
+      operationId: patchAccountOpen
+      requestBody:
+        description: Запрос для открытия зарезервированных счетов
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/AccountOpenRequest'
+      responses:
+        201:
+          description: Успешное запрос на открытие счетов
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountListResponse'
         400:
           $ref: '#/components/responses/400'
         404:
@@ -305,10 +332,11 @@ components:
     ProcessRequest:
       type: object
       properties:
-        clientInn:
+        idClient:
           type: string
-          minLength: 12
-          maxLength: 12
+          pattern: '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'
+          minLength: 36
+          maxLength: 36
 
     ProcessResponse:
       type: object
@@ -338,7 +366,7 @@ components:
       items:
         $ref: '#/components/schemas/ProcessResponse'
 
-    AccountRequest:
+    AccountReserveRequest:
       type: object
       properties:
         idClient:
@@ -349,6 +377,15 @@ components:
         code:
           type: string
           maxLength: 3
+
+    AccountOpenRequest:
+      type: object
+      properties:
+        idClient:
+          type: string
+          pattern: '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'
+          minLength: 36
+          maxLength: 36
 
     AccountResponse:
       type: object
@@ -375,6 +412,11 @@ components:
           pattern: 'MM/DD/YYYY HH24:MI:SS'
           description: Дата и время резервирования счета
         openingDate:
+          type: string
+          format: date-time
+          pattern: 'MM/DD/YYYY HH24:MI:SS'
+          description: Дата и время начала открытия счета
+        openDate:
           type: string
           format: date-time
           pattern: 'MM/DD/YYYY HH24:MI:SS'

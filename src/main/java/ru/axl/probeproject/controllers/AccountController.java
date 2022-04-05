@@ -5,7 +5,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import ru.axl.probeproject.api.AccountsApi;
-import ru.axl.probeproject.model.AccountRequest;
+import ru.axl.probeproject.model.AccountOpenRequest;
+import ru.axl.probeproject.model.AccountReserveRequest;
 import ru.axl.probeproject.model.AccountResponse;
 import ru.axl.probeproject.services.AccountService;
 
@@ -30,10 +31,17 @@ public class AccountController implements AccountsApi {
     }
 
     @Override
-    public ResponseEntity<AccountResponse> postAccountReserve(AccountRequest accountRequest) {
-        AccountResponse account = accountService.createAccount(accountRequest);
+    public ResponseEntity<AccountResponse> postAccountReserve(AccountReserveRequest accountRequest) {
+        AccountResponse account = accountService.reserveAccount(accountRequest);
 
         return new ResponseEntity<>(account, CREATED);
+    }
+
+    @Override
+    public ResponseEntity<List<AccountResponse>> patchAccountOpen(AccountOpenRequest accountOpenRequest) {
+        List<AccountResponse> accountResponses = accountService.openAccounts(accountOpenRequest);
+
+        return ok(accountResponses);
     }
 
 }

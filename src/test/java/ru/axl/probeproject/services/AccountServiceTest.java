@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import ru.axl.probeproject.mapper.AccountMapper;
-import ru.axl.probeproject.model.AccountRequest;
+import ru.axl.probeproject.model.AccountReserveRequest;
 import ru.axl.probeproject.model.AccountResponse;
 import ru.axl.probeproject.model.entities.Account;
 import ru.axl.probeproject.model.entities.AccountStatus;
@@ -24,12 +24,15 @@ import java.util.UUID;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
-import static ru.axl.probeproject.model.enums.AccountStatusEnum.RESERVING;
+import static ru.axl.probeproject.model.enums.AccountStatusEnum.RESERVED;
 
 class AccountServiceTest extends BaseServiceTest {
 
     @InjectMocks
     private AccountServiceImpl accountService;
+
+    @Mock
+    private ProcessService processService;
     
     @Mock
     private AccountRepository accountRepo;
@@ -71,15 +74,15 @@ class AccountServiceTest extends BaseServiceTest {
     void shouldCreateAccount() {
         final Account account = getAccount(uuidAccount1);
         when(clientRepo.findByIdClient(uuidClient)).thenReturn(Optional.of(getClient()));
-        when(accountStatusRepo.findByName(RESERVING.name())).thenReturn(Optional.of(getAccountStatus()));
+        when(accountStatusRepo.findByName(RESERVED.name())).thenReturn(Optional.of(getAccountStatus()));
         when(currencyRepo.findByCode(currencyCode)).thenReturn(Optional.of(getCurrency()));
         when(accountRepo.save(any())).thenReturn(account);
         when(accountMapper.toAccountResponse(account)).thenReturn(getAccountResponse(uuidAccountResponse1));
 
-        AccountRequest accountRequest = new AccountRequest()
+        AccountReserveRequest accountRequest = new AccountReserveRequest()
                 .idClient(uuidClient.toString())
                 .code(currencyCode);
-        AccountResponse accountResponse = accountService.createAccount(accountRequest);
+        AccountResponse accountResponse = accountService.reserveAccount(accountRequest);
 
         assertThat(accountResponse).isNotNull();
     }

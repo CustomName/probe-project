@@ -41,6 +41,9 @@ public class Account {
     @Column(name = "OPENING_DATE")
     private OffsetDateTime openingDate;
 
+    @Column(name = "OPEN_DATE")
+    private OffsetDateTime openDate;
+
     @ManyToOne
     @JoinColumn(name = "ID_ACCOUNT_STATUS")
     private AccountStatus accountStatus;

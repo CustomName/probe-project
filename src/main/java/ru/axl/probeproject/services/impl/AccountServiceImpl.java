@@ -5,7 +5,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.axl.probeproject.exceptions.ApiException;
 import ru.axl.probeproject.mapper.AccountMapper;
-import ru.axl.probeproject.model.AccountRequest;
+import ru.axl.probeproject.model.AccountOpenRequest;
+import ru.axl.probeproject.model.AccountReserveRequest;
 import ru.axl.probeproject.model.AccountResponse;
 import ru.axl.probeproject.model.entities.Account;
 import ru.axl.probeproject.model.entities.AccountStatus;
@@ -16,12 +17,18 @@ import ru.axl.probeproject.repositories.AccountStatusRepository;
 import ru.axl.probeproject.repositories.ClientRepository;
 import ru.axl.probeproject.repositories.CurrencyRepository;
 import ru.axl.probeproject.services.AccountService;
+import ru.axl.probeproject.services.ProcessService;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import static ru.axl.probeproject.exceptions.ApiError.*;
-import static ru.axl.probeproject.model.enums.AccountStatusEnum.RESERVING;
+import static ru.axl.probeproject.model.enums.AccountStatusEnum.OPENING;
+import static ru.axl.probeproject.model.enums.AccountStatusEnum.RESERVED;
+import static ru.axl.probeproject.model.enums.ProcessStatusEnum.ACCOUNT_PROCESSING;
+import static ru.axl.probeproject.model.enums.ProcessStatusEnum.COMPLIANCE_SUCCESS;
 import static ru.axl.probeproject.utils.Utils.getNowOffsetDateTime;
 
 @Slf4j
@@ -33,6 +40,7 @@ public class AccountServiceImpl implements AccountService {
     private final ClientRepository clientRepo;
     private final AccountStatusRepository accountStatusRepo;
     private final CurrencyRepository currencyRepo;
+    private final ProcessService processService;
     private final AccountMapper accountMapper;
 
     @Override
@@ -47,16 +55,19 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public AccountResponse createAccount(AccountRequest accountRequest) {
+    @Transactional
+    public AccountResponse reserveAccount(AccountReserveRequest accountRequest) {
         log.info("Резервирование счета:\n {}", accountRequest);
         UUID idClient = UUID.fromString(accountRequest.getIdClient());
         log.info("Поиск клиента по idClient = {}", idClient);
         Client client = clientRepo.findByIdClient(idClient).orElseThrow(() ->
                 new ApiException(CLIENT_NOT_FOUND, String.format("Не найден клиент с idClient = \"%s\"", idClient)));
 
-        AccountStatus accountStatusReserve = accountStatusRepo.findByName(RESERVING.name()).orElseThrow(() ->
+        AccountStatus accountStatusReserve = accountStatusRepo.findByName(RESERVED.name()).orElseThrow(() ->
                 new ApiException(ACCOUNT_STATUS_NOT_FOUND,
-                String.format("Не найден статус счета с name = \"%s\"", RESERVING.name())));
+                        String.format("Не найден статус счета с name = \"%s\"", RESERVED.name())));
+
+        processService.checkProcessActiveStatus(client, COMPLIANCE_SUCCESS);
 
         Currency currency = currencyRepo.findByCode(accountRequest.getCode()).orElseThrow(() ->
                 new ApiException(CURRENCY_NOT_FOUND,
@@ -71,9 +82,43 @@ public class AccountServiceImpl implements AccountService {
 
         Account savedAccount = accountRepo.save(account);
         AccountResponse accountResponse = accountMapper.toAccountResponse(savedAccount);
-        log.info("Счет отправлен на резервирование:\n {}", accountResponse);
+        log.info("Счет зарезервирован:\n {}", accountResponse);
 
         return accountResponse;
+    }
+
+    @Override
+    @Transactional
+    public List<AccountResponse> openAccounts(AccountOpenRequest accountRequest) {
+        log.info("Открытие зарезервированных счетов:\n {}", accountRequest);
+        UUID idClient = UUID.fromString(accountRequest.getIdClient());
+        log.info("Поиск клиента по idClient = {}", idClient);
+        Client client = clientRepo.findByIdClient(idClient).orElseThrow(() ->
+                new ApiException(CLIENT_NOT_FOUND, String.format("Не найден клиент с idClient = \"%s\"", idClient)));
+
+        AccountStatus accountStatusOpening = accountStatusRepo.findByName(OPENING.name()).orElseThrow(() ->
+                new ApiException(ACCOUNT_STATUS_NOT_FOUND,
+                        String.format("Не найден статус счета с name = \"%s\"", OPENING.name())));
+
+        List<Account> reservedAccounts = accountRepo.findAllByIdClient(client.getIdClient()).stream()
+                .filter(account -> account.getAccountStatus().getName().equals(RESERVED.name()))
+                .collect(Collectors.toList());
+        if(reservedAccounts.isEmpty()){
+            throw new ApiException(RESERVED_ACCOUNTS_NOT_FOUND, "Зарезервированных счетов не найдено");
+        }
+
+        processService.changeProcessStatusByClient(client, COMPLIANCE_SUCCESS, ACCOUNT_PROCESSING);
+
+        reservedAccounts.forEach(account -> {
+            account.setAccountStatus(accountStatusOpening);
+            account.setOpeningDate(getNowOffsetDateTime());
+        });
+        accountRepo.saveAll(reservedAccounts);
+
+        List<AccountResponse> accountResponses = accountMapper.toAccountResponseList(reservedAccounts);
+        log.info("Счета отправленные на открытие:\n {}", accountResponses);
+
+        return accountResponses;
     }
 
     private String generateReserveAccountNumber(Currency currency){

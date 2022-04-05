@@ -6,21 +6,17 @@ INSERT INTO PROCESS_STATUSES (ID_PROCESS_STATUS, NAME, DESCRIPTION)
 INSERT INTO PROCESS_STATUSES (ID_PROCESS_STATUS, NAME, DESCRIPTION)
     VALUES (random_uuid(), 'COMPLIANCE_ERROR', 'Комплаенс проверка завершилось ошибкой');
 INSERT INTO PROCESS_STATUSES (ID_PROCESS_STATUS, NAME, DESCRIPTION)
-    VALUES (random_uuid(), 'OPENING', 'Открытие счета');
+    VALUES (random_uuid(), 'ACCOUNT_PROCESSING', 'Процесс резервирования и открытия счета');
 INSERT INTO PROCESS_STATUSES (ID_PROCESS_STATUS, NAME, DESCRIPTION)
-    VALUES (random_uuid(), 'END_SUCCESS', 'Процесс завершен успешно');
-INSERT INTO PROCESS_STATUSES (ID_PROCESS_STATUS, NAME, DESCRIPTION)
-    VALUES (random_uuid(), 'END_ERROR', 'Процесс завершен с ошибкой');
+    VALUES (random_uuid(), 'DONE', 'Процесс завершен');
 
 --ACCOUNT_STATUSES
 INSERT INTO ACCOUNT_STATUSES (ID_ACCOUNT_STATUS, NAME, DESCRIPTION)
-    VALUES (random_uuid(), 'RESERVING', 'Счет на резервировании');
+    VALUES (random_uuid(), 'RESERVED', 'Счет зарезервирован');
 INSERT INTO ACCOUNT_STATUSES (ID_ACCOUNT_STATUS, NAME, DESCRIPTION)
     VALUES (random_uuid(), 'OPENING', 'Счет на открытии');
 INSERT INTO ACCOUNT_STATUSES (ID_ACCOUNT_STATUS, NAME, DESCRIPTION)
     VALUES (random_uuid(), 'REJECTED', 'Счет отклонен банком');
-INSERT INTO ACCOUNT_STATUSES (ID_ACCOUNT_STATUS, NAME, DESCRIPTION)
-    VALUES (random_uuid(), 'CANCELED', 'Счет отменен пользователем');
 INSERT INTO ACCOUNT_STATUSES (ID_ACCOUNT_STATUS, NAME, DESCRIPTION)
     VALUES (random_uuid(), 'OPENED', 'Счет открыт');
 
