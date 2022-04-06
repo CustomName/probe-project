@@ -22,13 +22,13 @@
 
 <div id="foundClientForm" class="card bg-light mb-3">
     <div class="card-header">
-        Поиск клиента
+        <h4>Поиск клиента</h4>
     </div>
     <div class="card-body">
         <input v-model="clientInn" placeholder="введите инн">
         <button v-on:click="findClientByInn" class="btn btn-dark">Найти</button>
-        <div>
-            <span v-show="error" class="badge bg-danger">{{error}}</span>
+        <div v-show="error" class="alert alert-danger" role="alert">
+            {{error}}
         </div>
     </div>
     <div class="card-footer">
@@ -53,13 +53,17 @@
 
 <div id="processForm" v-show="show" class="card bg-light mb-3 animate__animated animate__fadeInDown">
     <div class="card-header">
-        Процессы клиента
+        <h4>Процессы клиента</h4>
+        <span style="font-style:italic;">Данные в таблице обновляются вручную (по кнопке "Обновить")</span>
     </div>
     <div class="card-body">
-        <button v-on:click="findClientProcesses" class="btn btn-secondary">Обновить инфо</button>
         <button v-on:click="postProcess" class="btn btn-dark">Начать новый процесс</button>
-        <div>
-            <span v-show="error" class="badge bg-danger">{{error}}</span>
+        <button v-on:click="findClientProcesses" class="btn btn-secondary">Обновить</button>
+        <div v-show="error" class="alert alert-danger" role="alert">
+            {{error}}
+        </div>
+        <div v-show="lastProcess" class="alert alert-success" role="alert">
+            {{lastProcess}}
         </div>
     </div>
     <div class="card-footer">
@@ -85,6 +89,108 @@
     </div>
 </div>
 
+<div id="accountsForm" v-show="show" class="card bg-light mb-3 animate__animated animate__fadeInDown">
+    <div class="card-header">
+        <h4>Счета клиента</h4>
+        <span style="font-style:italic;">Данные в таблице обновляются вручную (по кнопке "Обновить")</span>
+    </div>
+    <div class="card-body">
+        <div class="input-group mb-3">
+            <select v-model="currencySelected" class="custom-select">
+                <option v-for="currency in currencies" v-bind:value="currency.code">
+                    {{currency.iso}}
+                </option>
+            </select>
+            <div class="input-group-append">
+                <button v-on:click="postReserve" class="btn btn-dark">Зарезервировать счет</button>
+            </div>
+        </div>
+        <button v-on:click="patchOpen" class="btn btn-dark">Открыть зарезервированные счета</button>
+        <button v-on:click="findClientAccounts" class="btn btn-secondary">Обновить</button>
+
+        <div v-show="error" class="alert alert-danger" role="alert">
+            {{error}}
+        </div>
+        <div v-show="lastAccount" class="alert alert-success" role="alert">
+            {{lastAccount}}
+        </div>
+    </div>
+    <div class="card-footer">
+        <table class="table animate__animated animate__flash" v-show="showTable">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">СТАТУС</th>
+                <th scope="col">НОМЕР</th>
+                <th scope="col">ВАЛЮТА</th>
+                <th scope="col">ДАТА РЕЗЕРВИРОВАНИЯ</th>
+                <th scope="col">ДАТА НАЧАЛА ОТКРЫТИЯ</th>
+                <th scope="col">ДАТА ОТКРЫТИЯ</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="account in accountList"
+                v-bind:key="account.idAccount">
+                <td>{{account.idAccount}}</td>
+                <td>{{account.accountStatus}}</td>
+                <td>{{account.number}}</td>
+                <td>{{account.currencyIso}}</td>
+                <td>{{account.reservationDate}}</td>
+                <td>{{account.openingDate}}</td>
+                <td>{{account.openDate}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div id="dictionaries" class="row">
+    <div class="col-sm-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Типы статусов процессов</h5>
+                <table class="table">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">СТАТУС</th>
+                        <th scope="col">ОПИСАНИЕ</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr v-for="status in processStatuses"
+                        v-bind:key="status.idProcessStatus">
+                        <td>{{status.name}}</td>
+                        <td>{{status.description}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Типы статусов счетов</h5>
+                <table class="table">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">СТАТУС</th>
+                        <th scope="col">ОПИСАНИЕ</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr v-for="status in accountStatuses"
+                        v-bind:key="status.idProcessStatus">
+                        <td>{{status.name}}</td>
+                        <td>{{status.description}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
         var foundClientForm = new Vue({
           el: '#foundClientForm',
@@ -99,12 +205,17 @@
               this.showTable = false;
               this.error = '';
               processForm.show = false;
+              processForm.error = '';
               processForm.processesList = [];
+              accountsForm.show = false;
+              accountsForm.error = '';
+              accountsForm.accountList = [];
               axios
                   .get('http://localhost:8080/clients/inn/' + this.clientInn)
                   .then(resp => {
                     this.foundClient = resp.data;
                     processForm.show = true;
+                    accountsForm.show = true;
                   })
                   .catch(err => {
                     this.foundClient = {};
@@ -121,19 +232,21 @@
             show: false,
             showTable: false,
             processesList: [],
+            lastProcess: '',
             error: ''
           },
           methods: {
             postProcess: function() {
               this.error = '';
               this.showTable = false;
+              this.lastProcess = '';
               var req = {
                 idClient: foundClientForm.foundClient.idClient
               };
               axios
                   .post('http://localhost:8080/processes', req)
                   .then(resp => {
-                    this.processesList = [resp.data];
+                    this.lastProcess = resp.data;
                   })
                   .catch(err => {
                     this.error = err.response.data.message;
@@ -143,6 +256,7 @@
             findClientProcesses: function() {
               this.error = '';
               this.showTable = false;
+              this.lastProcess = '';
               axios
                   .get('http://localhost:8080/processes/clients/' + foundClientForm.foundClient.idClient)
                   .then(resp => {
@@ -156,7 +270,116 @@
           }
         })
 
+        var accountsForm = new Vue({
+          el: '#accountsForm',
+          data: {
+            show: false,
+            showTable: false,
+            accountList: [],
+            lastAccount: '',
+            currencies: [],
+            currencySelected: '810',
+            error: ''
+          },
+          methods: {
+            postReserve: function() {
+              this.error = '';
+              this.showTable = false;
+              this.lastAccount = '';
+              var req = {
+                idClient: foundClientForm.foundClient.idClient,
+                code: this.currencySelected
+              };
+              axios
+                  .post('http://localhost:8080/accounts/reserve', req)
+                  .then(resp => {
+                    this.lastAccount = resp.data;
+                  })
+                  .catch(err => {
+                    this.error = err.response.data.message;
+                  })
+                  .finally(() => this.showTable = true)
+            },
+            patchOpen: function() {
+              this.error = '';
+              this.showTable = false;
+              this.lastAccount = '';
+              var req = {
+                idClient: foundClientForm.foundClient.idClient
+              };
+              axios
+                  .patch('http://localhost:8080/accounts/open', req)
+                  .then(resp => {
+                    this.lastAccount = resp.data;
+                  })
+                  .catch(err => {
+                    this.error = err.response.data.message;
+                  })
+                  .finally(() => this.showTable = true)
+            },
+            findClientAccounts: function() {
+              this.error = '';
+              this.showTable = false;
+              this.lastAccount = '';
+              axios
+                  .get('http://localhost:8080/accounts/clients/' + foundClientForm.foundClient.idClient)
+                  .then(resp => {
+                    this.accountList = resp.data;
+                  })
+                  .catch(err => {
+                    this.error = err.response.data.message;
+                  })
+                  .finally(() => this.showTable = true)
+            }
+          }
+        })
 
+        var dictionaries = new Vue({
+          el: '#dictionaries',
+          data: {
+            processStatuses: [],
+            accountStatuses: [],
+            currencies: []
+          },
+          methods: {
+            getProcessStatuses: function() {
+              axios
+                  .get('http://localhost:8080/process-statuses')
+                  .then(resp => {
+                    this.processStatuses = resp.data;
+                  })
+                  .catch(err => {
+
+                  })
+            },
+            getAccountStatuses: function() {
+              axios
+                  .get('http://localhost:8080/account-statuses')
+                  .then(resp => {
+                    this.accountStatuses = resp.data;
+                  })
+                  .catch(err => {
+
+                  })
+            },
+            getCurrencies: function() {
+              axios
+                  .get('http://localhost:8080/dictionaries/currencies')
+                  .then(resp => {
+                    this.currencies = resp.data;
+                    accountsForm.currencies = resp.data;
+                  })
+                  .catch(err => {
+
+                  })
+            }
+          },
+          mounted() {
+            this.getProcessStatuses();
+            this.getAccountStatuses();
+            this.getCurrencies();
+          }
+        })
 </script>
 </body>
 

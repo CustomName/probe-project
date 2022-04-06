@@ -1,12 +1,12 @@
 --PROCESS_STATUSES
 INSERT INTO PROCESS_STATUSES (ID_PROCESS_STATUS, NAME, DESCRIPTION)
-    VALUES (random_uuid(), 'NEW', 'Новый процесс');
+    VALUES (random_uuid(), 'NEW', 'Новый процесс. Идет комплаенс проверка (занимает 10-20 секунд)');
 INSERT INTO PROCESS_STATUSES (ID_PROCESS_STATUS, NAME, DESCRIPTION)
-    VALUES (random_uuid(), 'COMPLIANCE_SUCCESS', 'Комплаенс проверка успешно выполнена');
+    VALUES (random_uuid(), 'COMPLIANCE_SUCCESS', 'Комплаенс проверка успешно выполнена. Можно резервировать счета');
 INSERT INTO PROCESS_STATUSES (ID_PROCESS_STATUS, NAME, DESCRIPTION)
-    VALUES (random_uuid(), 'COMPLIANCE_ERROR', 'Комплаенс проверка завершилось ошибкой');
+    VALUES (random_uuid(), 'COMPLIANCE_ERROR', 'Комплаенс проверка завершилось ошибкой. Попробуйте начать новый процесс');
 INSERT INTO PROCESS_STATUSES (ID_PROCESS_STATUS, NAME, DESCRIPTION)
-    VALUES (random_uuid(), 'ACCOUNT_PROCESSING', 'Процесс резервирования и открытия счета');
+    VALUES (random_uuid(), 'ACCOUNT_PROCESSING', 'Идет открытие зарезервированных счетов');
 INSERT INTO PROCESS_STATUSES (ID_PROCESS_STATUS, NAME, DESCRIPTION)
     VALUES (random_uuid(), 'DONE', 'Процесс завершен');
 
@@ -14,9 +14,9 @@ INSERT INTO PROCESS_STATUSES (ID_PROCESS_STATUS, NAME, DESCRIPTION)
 INSERT INTO ACCOUNT_STATUSES (ID_ACCOUNT_STATUS, NAME, DESCRIPTION)
     VALUES (random_uuid(), 'RESERVED', 'Счет зарезервирован');
 INSERT INTO ACCOUNT_STATUSES (ID_ACCOUNT_STATUS, NAME, DESCRIPTION)
-    VALUES (random_uuid(), 'OPENING', 'Счет на открытии');
+    VALUES (random_uuid(), 'OPENING', 'Счет на открытии (занимает 10-20 секунд)');
 INSERT INTO ACCOUNT_STATUSES (ID_ACCOUNT_STATUS, NAME, DESCRIPTION)
-    VALUES (random_uuid(), 'REJECTED', 'Счет отклонен банком');
+    VALUES (random_uuid(), 'REJECTED', 'Счет отклонен банком. На данный момент доступно только открытие рублевых счетов');
 INSERT INTO ACCOUNT_STATUSES (ID_ACCOUNT_STATUS, NAME, DESCRIPTION)
     VALUES (random_uuid(), 'OPENED', 'Счет открыт');
 

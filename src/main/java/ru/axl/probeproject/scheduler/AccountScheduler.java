@@ -52,6 +52,7 @@ public class AccountScheduler {
         accounts.forEach(acc -> {
             acc.setNumber(generateAccountNumber(acc.getCurrency()));
             acc.setAccountStatus(acc.getCurrency().getCode().equals("810") ? opened : rejected);
+            acc.setOpenDate(acc.getAccountStatus().equals(rejected) ? getNowOffsetDateTime() : null);
         });
 
         log.info("Результат открытия счетов\n {}", accounts);
@@ -64,7 +65,7 @@ public class AccountScheduler {
     }
 
     private String generateAccountNumber(Currency currency){
-        return String.format("40702%s44444444%d", currency.getCode(), randNumberWithBounds(1111, 9999));
+        return String.format("40702%s000000%d", currency.getCode(), randNumberWithBounds(111111, 999999));
     }
 
 }
