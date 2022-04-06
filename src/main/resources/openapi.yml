@@ -348,13 +348,9 @@ components:
           maxLength: 36
         startDate:
           type: string
-          format: date-time
-          pattern: 'MM/DD/YYYY HH24:MI:SS'
           description: Дата и время начала процесса
         lastUpdateDate:
           type: string
-          format: date-time
-          pattern: 'MM/DD/YYYY HH24:MI:SS'
           description: Дата и время последнего обновления процесса
         processStatus:
           type: string
@@ -408,18 +404,12 @@ components:
           maxLength: 100
         reservationDate:
           type: string
-          format: date-time
-          pattern: 'MM/DD/YYYY HH24:MI:SS'
           description: Дата и время резервирования счета
         openingDate:
           type: string
-          format: date-time
-          pattern: 'MM/DD/YYYY HH24:MI:SS'
           description: Дата и время начала открытия счета
         openDate:
           type: string
-          format: date-time
-          pattern: 'MM/DD/YYYY HH24:MI:SS'
           description: Дата и время открытия счета
         accountStatus:
           type: string
