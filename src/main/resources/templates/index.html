@@ -207,9 +207,11 @@
               processForm.show = false;
               processForm.error = '';
               processForm.processesList = [];
+              processForm.lastProcess = '';
               accountsForm.show = false;
               accountsForm.error = '';
               accountsForm.accountList = [];
+              accountsForm.lastAccount = '';
               axios
                   .get('http://localhost:8080/clients/inn/' + this.clientInn)
                   .then(resp => {

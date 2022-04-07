@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>ru.axl</groupId>
 	<artifactId>probeproject</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0</version>
 	<name>probeproject</name>
 	<description>probe-project for test testing</description>
 	<properties>

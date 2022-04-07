@@ -19,7 +19,8 @@ class ProcessStatusRepositoryTest extends BaseRepositoryTest {
 
         assertThat(processStatus).isNotNull();
         assertThat(processStatus.getName()).isEqualTo(processStatusName);
-        assertThat(processStatus.getDescription()).isEqualTo("Новый процесс");
+        assertThat(processStatus.getDescription())
+                .isEqualTo("Новый процесс. Промежуточный статус. Идет комплаенс проверка (занимает 10-20 секунд)");
     }
 
 }
