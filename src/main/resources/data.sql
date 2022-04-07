@@ -1,14 +1,14 @@
 --PROCESS_STATUSES
 INSERT INTO PROCESS_STATUSES (ID_PROCESS_STATUS, NAME, DESCRIPTION)
-    VALUES (random_uuid(), 'NEW', 'Новый процесс. Идет комплаенс проверка (занимает 10-20 секунд)');
+    VALUES (random_uuid(), 'NEW', 'Новый процесс. Промежуточный статус. Идет комплаенс проверка (занимает 10-20 секунд)');
 INSERT INTO PROCESS_STATUSES (ID_PROCESS_STATUS, NAME, DESCRIPTION)
-    VALUES (random_uuid(), 'COMPLIANCE_SUCCESS', 'Комплаенс проверка успешно выполнена. Можно резервировать счета');
+    VALUES (random_uuid(), 'COMPLIANCE_SUCCESS', 'Комплаенс проверка успешно выполнена. Промежуточный статус. Можно резервировать счета');
 INSERT INTO PROCESS_STATUSES (ID_PROCESS_STATUS, NAME, DESCRIPTION)
-    VALUES (random_uuid(), 'COMPLIANCE_ERROR', 'Комплаенс проверка завершилось ошибкой. Попробуйте начать новый процесс');
+    VALUES (random_uuid(), 'COMPLIANCE_ERROR', 'Комплаенс проверка завершилось ошибкой. Конечный статус. Попробуйте начать новый процесс');
 INSERT INTO PROCESS_STATUSES (ID_PROCESS_STATUS, NAME, DESCRIPTION)
-    VALUES (random_uuid(), 'ACCOUNT_PROCESSING', 'Идет открытие зарезервированных счетов');
+    VALUES (random_uuid(), 'ACCOUNT_PROCESSING', 'Идет открытие зарезервированных счетов. Промежуточный статус.');
 INSERT INTO PROCESS_STATUSES (ID_PROCESS_STATUS, NAME, DESCRIPTION)
-    VALUES (random_uuid(), 'DONE', 'Процесс завершен');
+    VALUES (random_uuid(), 'DONE', 'Процесс завершен. Конечный статус.');
 
 --ACCOUNT_STATUSES
 INSERT INTO ACCOUNT_STATUSES (ID_ACCOUNT_STATUS, NAME, DESCRIPTION)
