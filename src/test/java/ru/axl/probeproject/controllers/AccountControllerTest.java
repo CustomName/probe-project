@@ -10,6 +10,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import ru.axl.probeproject.controllers.base.BaseControllerTest;
 import ru.axl.probeproject.exceptions.GlobalExceptionHandler;
+import ru.axl.probeproject.model.AccountOpenRequest;
 import ru.axl.probeproject.model.AccountReserveRequest;
 import ru.axl.probeproject.model.AccountResponse;
 import ru.axl.probeproject.services.AccountService;
@@ -23,8 +24,7 @@ import static org.mockito.Mockito.when;
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 
 class AccountControllerTest extends BaseControllerTest {
 
@@ -81,6 +81,31 @@ class AccountControllerTest extends BaseControllerTest {
 
         AccountResponse accountRespAct = objectMapper.readValue(response.getContentAsString(), AccountResponse.class);
         assertThat(accountRespAct).isEqualTo(accountResponse);
+    }
+
+    @Test
+    void whenPatchAccountOpen_thenStatus200() throws Exception {
+        AccountOpenRequest req = new AccountOpenRequest()
+                .idClient(UUID.randomUUID().toString());
+        List<AccountResponse> accRespExp = List.of(
+                new AccountResponse()
+                        .idAccount(UUID.randomUUID().toString()),
+                new AccountResponse()
+                        .idAccount(UUID.randomUUID().toString())
+        );
+
+        when(accountService.openAccounts(req)).thenReturn(accRespExp);
+
+        MockHttpServletResponse resp = mvc.perform(patch("/accounts/open")
+                        .contentType(APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(req)))
+                .andReturn().getResponse();
+
+        assertThat(resp.getStatus()).isEqualTo(OK.value());
+
+        List<AccountResponse> accRespAct = objectMapper.readValue(resp.getContentAsString(),
+                new TypeReference<>() {});
+        assertThat(accRespAct).isEqualTo(accRespExp);
     }
 
 }
