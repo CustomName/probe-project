@@ -52,11 +52,14 @@ docker run --rm -p 8080:8080 aleksrad/probe-project
 ### После запуска приложение доступно через
 #### UI
 http://localhost:8080/web/app
+![image](https://user-images.githubusercontent.com/10981830/164065630-d904793e-427b-4059-b6f5-d2e3edb1b278.png)
 #### API
 Swagger:
 http://localhost:8080/probe-project/swagger-ui.html
 
 ### Особенности
+Для запуска через Maven вам потребуется **Java 11**
+
 В проекте используется openapi (swagger) для генерирования интерфейсов
 и dto. Необходимые классы станут доступны после выполнения команды мавен:
 
