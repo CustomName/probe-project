@@ -4,19 +4,17 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-import ru.axl.probeproject.exceptions.ApiException;
 import ru.axl.probeproject.model.entities.Account;
 import ru.axl.probeproject.model.entities.AccountStatus;
 import ru.axl.probeproject.model.entities.Currency;
 import ru.axl.probeproject.model.enums.AccountStatusEnum;
 import ru.axl.probeproject.repositories.AccountRepository;
-import ru.axl.probeproject.repositories.AccountStatusRepository;
+import ru.axl.probeproject.services.AccountStatusService;
 import ru.axl.probeproject.services.ProcessService;
 
 import javax.transaction.Transactional;
 import java.util.List;
 
-import static ru.axl.probeproject.exceptions.ApiError.ACCOUNT_STATUS_NOT_FOUND;
 import static ru.axl.probeproject.model.enums.AccountStatusEnum.*;
 import static ru.axl.probeproject.model.enums.ProcessStatusEnum.ACCOUNT_PROCESSING;
 import static ru.axl.probeproject.model.enums.ProcessStatusEnum.DONE;
@@ -30,7 +28,7 @@ public class AccountScheduler {
 
     private final ProcessService processService;
     private final AccountRepository accountRepo;
-    private final AccountStatusRepository accountStatusRepo;
+    private final AccountStatusService accountStatusService;
 
     @Transactional
     @Scheduled(fixedDelayString = "${scheduler-config.fixed-delay}",
@@ -59,9 +57,7 @@ public class AccountScheduler {
     }
 
     private AccountStatus getStatus(AccountStatusEnum accountStatusEnum){
-        return accountStatusRepo.findByName(accountStatusEnum.name()).orElseThrow(() ->
-                new ApiException(ACCOUNT_STATUS_NOT_FOUND,
-                        String.format("Не найден статус счета с name = '%s'", accountStatusEnum.name())));
+        return accountStatusService.findByName(accountStatusEnum.name());
     }
 
     private String generateAccountNumber(Currency currency){

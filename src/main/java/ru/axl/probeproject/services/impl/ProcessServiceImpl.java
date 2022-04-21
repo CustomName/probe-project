@@ -13,8 +13,8 @@ import ru.axl.probeproject.model.entities.ProcessStatus;
 import ru.axl.probeproject.model.enums.ProcessStatusEnum;
 import ru.axl.probeproject.repositories.ClientRepository;
 import ru.axl.probeproject.repositories.ProcessRepository;
-import ru.axl.probeproject.repositories.ProcessStatusRepository;
 import ru.axl.probeproject.services.ProcessService;
+import ru.axl.probeproject.services.ProcessStatusService;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -33,7 +33,7 @@ public class ProcessServiceImpl implements ProcessService {
 
     private final ProcessRepository processRepo;
     private final ClientRepository clientRepo;
-    private final ProcessStatusRepository processStatusRepo;
+    private final ProcessStatusService processStatusService;
     private final ProcessMapper processMapper;
 
     private final Set<String> notTerminalStatuses = Set.of(
@@ -111,9 +111,7 @@ public class ProcessServiceImpl implements ProcessService {
     }
 
     private ProcessStatus getProcessStatus(ProcessStatusEnum newProcessStatus){
-        return processStatusRepo.findByName(newProcessStatus.name()).orElseThrow(() ->
-                new ApiException(PROCESS_STATUS_NOT_FOUND,
-                        String.format("Не найден статус процесса с name = '%s'", newProcessStatus.name())));
+        return processStatusService.findByName(newProcessStatus.name());
     }
 
     private void checkNotTerminalProcessesByClient(Client client){
