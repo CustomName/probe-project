@@ -54,8 +54,12 @@ docker run --rm -p 8080:8080 aleksrad/probe-project
 http://localhost:8080/web/app
 ![image](https://user-images.githubusercontent.com/10981830/164065630-d904793e-427b-4059-b6f5-d2e3edb1b278.png)
 #### API
-Swagger:
+**Swagger:**
 http://localhost:8080/probe-project/swagger-ui.html
+
+**Postman:**
+в корне проекта содержится коллекция для импорта в postman:
+`probe-project.postman_collection.json`
 
 ### Особенности
 Для запуска через Maven вам потребуется **Java 11**
