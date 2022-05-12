@@ -9,6 +9,9 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.util.UUID;
 
+/**
+ * Сущность валюты
+ */
 @Entity
 @Data
 @Builder
@@ -17,18 +20,30 @@ import java.util.UUID;
 @Table(name="CURRENCIES")
 public class Currency {
 
+    /**
+     * Идентификатор
+     */
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     @Column(name = "ID_CURRENCY")
     private UUID idCurrency;
 
+    /**
+     * Код
+     */
     @Column(name="CODE", length=3, nullable=false, unique=true)
     private String code;
 
+    /**
+     * ISO
+     */
     @Column(name="ISO", length=3, nullable=false, unique=true)
     private String iso;
 
+    /**
+     * Имя
+     */
     @Column(name="NAME", length=30, nullable=false)
     private String name;
 

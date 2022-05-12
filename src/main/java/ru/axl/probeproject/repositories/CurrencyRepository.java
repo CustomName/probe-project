@@ -6,6 +6,9 @@ import ru.axl.probeproject.model.entities.Currency;
 
 import java.util.Optional;
 
+/**
+ * Репозиторий справочника валют
+ */
 @Repository
 public interface CurrencyRepository extends JpaRepository<Currency, Long> {
 

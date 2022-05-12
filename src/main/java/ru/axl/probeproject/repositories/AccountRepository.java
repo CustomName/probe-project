@@ -10,6 +10,9 @@ import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Репозиторий счетов
+ */
 @Repository
 public interface AccountRepository extends JpaRepository<Account, Long> {
 

@@ -66,7 +66,7 @@ public class AccountServiceImpl implements AccountService {
 
         AccountStatus accountStatusReserve = accountStatusService.findByName(RESERVED.name());
 
-        processService.checkProcessActiveStatus(client, COMPLIANCE_SUCCESS);
+        processService.checkAndGetProcessActiveStatus(client, COMPLIANCE_SUCCESS);
 
         Currency currency = currencyService.findByCode(accountRequest.getCode());
 

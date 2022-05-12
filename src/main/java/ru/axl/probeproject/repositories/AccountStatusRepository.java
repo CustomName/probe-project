@@ -6,6 +6,9 @@ import ru.axl.probeproject.model.entities.AccountStatus;
 
 import java.util.Optional;
 
+/**
+ * Репозиторий статусов счета
+ */
 @Repository
 public interface AccountStatusRepository extends JpaRepository<AccountStatus, Long> {
 

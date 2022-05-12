@@ -10,6 +10,9 @@ import javax.persistence.*;
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
+/**
+ * Сущность процесса
+ */
 @Entity
 @Data
 @Builder
@@ -18,22 +21,37 @@ import java.util.UUID;
 @Table(name="PROCESSES")
 public class Process {
 
+    /**
+     * Идентификатор
+     */
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     @Column(name = "ID_PROCESS")
     private UUID idProcess;
 
+    /**
+     * Клиент
+     */
     @ManyToOne
     @JoinColumn(name = "ID_CLIENT")
     private Client client;
 
+    /**
+     * Дата начала процесса
+     */
     @Column(name = "START_DATE")
     private OffsetDateTime startDate;
 
+    /**
+     * Дата последнего обновления
+     */
     @Column(name = "LAST_UPDATE_DATE")
     private OffsetDateTime lastUpdateDate;
 
+    /**
+     * Статус процесса
+     */
     @ManyToOne
     @JoinColumn(name = "ID_PROCESS_STATUS")
     private ProcessStatus processStatus;
