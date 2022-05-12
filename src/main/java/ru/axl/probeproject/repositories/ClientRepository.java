@@ -7,6 +7,9 @@ import ru.axl.probeproject.model.entities.Client;
 import java.util.Optional;
 import java.util.UUID;
 
+/**
+ * Репозиторий клиентов
+ */
 @Repository
 public interface ClientRepository extends JpaRepository<Client, Long> {
 

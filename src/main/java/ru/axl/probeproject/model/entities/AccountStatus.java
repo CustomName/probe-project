@@ -9,6 +9,9 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.util.UUID;
 
+/**
+ * Сущность статуса счета
+ */
 @Entity
 @Data
 @Builder
@@ -17,15 +20,24 @@ import java.util.UUID;
 @Table(name="ACCOUNT_STATUSES")
 public class AccountStatus {
 
+    /**
+     * Идентификатор
+     */
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     @Column(name = "ID_ACCOUNT_STATUS")
     private UUID idAccountStatus;
 
+    /**
+     * Имя
+     */
     @Column(name="NAME", length=30, nullable=false)
     private String name;
 
+    /**
+     * Описание
+     */
     @Column(name="DESCRIPTION", length=200, nullable=false)
     private String description;
 

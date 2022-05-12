@@ -1,5 +1,8 @@
 package ru.axl.probeproject.model.enums;
 
+/**
+ * Статус процесса
+ */
 public enum ProcessStatusEnum {
 
     /**

@@ -83,7 +83,7 @@ public class ProcessServiceImpl implements ProcessService {
                                             ProcessStatusEnum newProcessStatus) {
         final ProcessStatus processStatus = getProcessStatus(newProcessStatus);
 
-        Process activeProcess = checkProcessActiveStatus(client, oldProcessStatus);
+        Process activeProcess = checkAndGetProcessActiveStatus(client, oldProcessStatus);
 
         activeProcess.setLastUpdateDate(getNowOffsetDateTime());
         activeProcess.setProcessStatus(processStatus);
@@ -91,7 +91,7 @@ public class ProcessServiceImpl implements ProcessService {
     }
 
     @Override
-    public Process checkProcessActiveStatus(Client client, ProcessStatusEnum processStatus){
+    public Process checkAndGetProcessActiveStatus(Client client, ProcessStatusEnum processStatus){
         List<Process> processes = processRepo.findAllByIdClient(client.getIdClient());
 
         List<Process> activeProcesses = processes.stream()
