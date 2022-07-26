@@ -28,3 +28,8 @@ springdoc:
 scheduler-config:
   fixed-delay: 10000
   initial-delay: 10000
+
+user:
+  username: tester
+  password: '$2a$10$HcW26QjHXYXFrnhHhIsugOfSWNkjFAABmzfNkDMw9b0dy5jDvrjYe'
+  role: TESTER
