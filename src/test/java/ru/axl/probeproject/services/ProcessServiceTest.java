@@ -29,6 +29,9 @@ class ProcessServiceTest extends BaseServiceTest {
     private ProcessServiceImpl processService;
 
     @Mock
+    private ProcessStatusService processStatusService;
+
+    @Mock
     private ProcessRepository processRepo;
 
     @Mock
@@ -52,7 +55,7 @@ class ProcessServiceTest extends BaseServiceTest {
         Process process = getProcess(uuidProcess1);
         ProcessResponse processResponse = getProcessResponse(uuidProcess1);
         when(clientRepo.findByIdClient(client.getIdClient())).thenReturn(Optional.of(client));
-        when(processStatusRepo.findByName(processStatus.getName())).thenReturn(Optional.of(processStatus));
+        when(processStatusService.findByName(processStatus.getName())).thenReturn(processStatus);
         when(processRepo.save(any())).thenReturn(process);
         when(processMapper.toProcessResponse(process)).thenReturn(processResponse);
 
