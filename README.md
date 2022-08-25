@@ -58,6 +58,10 @@ docker run --rm -p 8080:8080 aleksrad/probe-project
 http://localhost:8080/web/app
 ![image](https://user-images.githubusercontent.com/10981830/164065630-d904793e-427b-4059-b6f5-d2e3edb1b278.png)
 #### API
+Запросы к api начинаются с аутентификации:
+
+http://localhost:8080/login?username=tester&password=tester
+
 **Swagger:**
 http://localhost:8080/probe-project/swagger-ui.html
 
