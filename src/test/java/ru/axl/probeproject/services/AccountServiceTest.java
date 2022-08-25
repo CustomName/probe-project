@@ -33,6 +33,12 @@ class AccountServiceTest extends BaseServiceTest {
 
     @Mock
     private ProcessService processService;
+
+    @Mock
+    private AccountStatusService accountStatusService;
+
+    @Mock
+    private CurrencyService currencyService;
     
     @Mock
     private AccountRepository accountRepo;
@@ -74,8 +80,8 @@ class AccountServiceTest extends BaseServiceTest {
     void shouldCreateAccount() {
         final Account account = getAccount(uuidAccount1);
         when(clientRepo.findByIdClient(uuidClient)).thenReturn(Optional.of(getClient()));
-        when(accountStatusRepo.findByName(RESERVED.name())).thenReturn(Optional.of(getAccountStatus()));
-        when(currencyRepo.findByCode(currencyCode)).thenReturn(Optional.of(getCurrency()));
+        when(accountStatusService.findByName(RESERVED.name())).thenReturn(getAccountStatus());
+        when(currencyService.findByCode(currencyCode)).thenReturn(getCurrency());
         when(accountRepo.save(any())).thenReturn(account);
         when(accountMapper.toAccountResponse(account)).thenReturn(getAccountResponse(uuidAccountResponse1));
 
