@@ -216,7 +216,7 @@
               accountsForm.accountList = [];
               accountsForm.lastAccount = '';
               axios
-                  .get('http://localhost:8080/clients/inn/' + this.clientInn)
+                  .get('/clients/inn/' + this.clientInn)
                   .then(resp => {
                     this.foundClient = resp.data;
                     processForm.show = true;
@@ -249,7 +249,7 @@
                 idClient: foundClientForm.foundClient.idClient
               };
               axios
-                  .post('http://localhost:8080/processes', req)
+                  .post('/processes', req)
                   .then(resp => {
                     this.lastProcess = resp.data;
                   })
@@ -263,7 +263,7 @@
               this.showTable = false;
               this.lastProcess = '';
               axios
-                  .get('http://localhost:8080/processes/clients/' + foundClientForm.foundClient.idClient)
+                  .get('/processes/clients/' + foundClientForm.foundClient.idClient)
                   .then(resp => {
                     this.processesList = resp.data;
                   })
@@ -296,7 +296,7 @@
                 code: this.currencySelected
               };
               axios
-                  .post('http://localhost:8080/accounts/reserve', req)
+                  .post('/accounts/reserve', req)
                   .then(resp => {
                     this.lastAccount = resp.data;
                   })
@@ -313,7 +313,7 @@
                 idClient: foundClientForm.foundClient.idClient
               };
               axios
-                  .patch('http://localhost:8080/accounts/open', req)
+                  .patch('/accounts/open', req)
                   .then(resp => {
                     this.lastAccount = resp.data;
                   })
@@ -327,7 +327,7 @@
               this.showTable = false;
               this.lastAccount = '';
               axios
-                  .get('http://localhost:8080/accounts/clients/' + foundClientForm.foundClient.idClient)
+                  .get('/accounts/clients/' + foundClientForm.foundClient.idClient)
                   .then(resp => {
                     this.accountList = resp.data;
                   })
@@ -349,7 +349,7 @@
           methods: {
             getProcessStatuses: function() {
               axios
-                  .get('http://localhost:8080/process-statuses')
+                  .get('/process-statuses')
                   .then(resp => {
                     this.processStatuses = resp.data;
                   })
@@ -359,7 +359,7 @@
             },
             getAccountStatuses: function() {
               axios
-                  .get('http://localhost:8080/account-statuses')
+                  .get('/account-statuses')
                   .then(resp => {
                     this.accountStatuses = resp.data;
                   })
@@ -369,7 +369,7 @@
             },
             getCurrencies: function() {
               axios
-                  .get('http://localhost:8080/dictionaries/currencies')
+                  .get('/dictionaries/currencies')
                   .then(resp => {
                     this.currencies = resp.data;
                     accountsForm.currencies = resp.data;
