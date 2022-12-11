@@ -11,7 +11,7 @@ import java.time.OffsetDateTime;
 import java.util.UUID;
 
 /**
- * Сущность счета
+ * Сущность счета.
  */
 @Entity
 @Data
@@ -22,7 +22,7 @@ import java.util.UUID;
 public class Account {
 
     /**
-     * Идентификатор
+     * Идентификатор.
      */
     @Id
     @GeneratedValue(generator = "UUID")
@@ -31,45 +31,45 @@ public class Account {
     private UUID idAccount;
 
     /**
-     * Номер
+     * Номер.
      */
-    @Column(name="NUMBER", length=20, nullable=false)
+    @Column(name = "NUMBER", length = 20, nullable = false)
     private String number;
 
     /**
-     * Валюта
+     * Валюта.
      */
     @ManyToOne
     @JoinColumn(name = "ID_CURRENCY")
     private Currency currency;
 
     /**
-     * Клиент
+     * Клиент.
      */
     @ManyToOne
     @JoinColumn(name = "ID_CLIENT")
     private Client client;
 
     /**
-     * Дата резервирования
+     * Дата резервирования.
      */
     @Column(name = "RESERVATION_DATE")
     private OffsetDateTime reservationDate;
 
     /**
-     * Дата начала процесса открытия счета
+     * Дата начала процесса открытия счета.
      */
     @Column(name = "OPENING_DATE")
     private OffsetDateTime openingDate;
 
     /**
-     * Дата открытия счета
+     * Дата открытия счета.
      */
     @Column(name = "OPEN_DATE")
     private OffsetDateTime openDate;
 
     /**
-     * Статус счета
+     * Статус счета.
      */
     @ManyToOne
     @JoinColumn(name = "ID_ACCOUNT_STATUS")

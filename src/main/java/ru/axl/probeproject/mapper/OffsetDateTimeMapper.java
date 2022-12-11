@@ -10,12 +10,12 @@ import static java.util.Objects.isNull;
 @Mapper
 public interface OffsetDateTimeMapper {
 
-    default String asString(OffsetDateTime offsetDateTime){
-        if(isNull(offsetDateTime)){
+    default String asString(OffsetDateTime offsetDateTime) {
+        if (isNull(offsetDateTime)) {
             return "";
         }
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss");
+        final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss");
 
         return formatter.format(offsetDateTime);
     }

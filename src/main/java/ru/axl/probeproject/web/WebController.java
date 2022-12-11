@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class WebController {
 
     @GetMapping("/app")
-    public String getWebApp(){
+    public String getWebApp() {
         return "index";
     }
 

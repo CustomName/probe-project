@@ -6,7 +6,7 @@ import ru.axl.probeproject.model.entities.AccountStatus;
 
 import java.util.List;
 
-@Mapper(uses = {UuidMapper.class})
+@Mapper(uses = UuidMapper.class)
 public interface AccountStatusMapper {
 
     AccountStatusResponse toAccountStatusResponse(AccountStatus accountStatus);

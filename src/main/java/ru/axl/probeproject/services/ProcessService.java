@@ -10,12 +10,12 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * Сервис для работы с процессами клиента
+ * Сервис для работы с процессами клиента.
  */
 public interface ProcessService {
 
     /**
-     * Метод создает новый процесс
+     * Метод создает новый процесс.
      *
      * @param processRequest Запрос для создания процесса
      * @return Созданный процесс
@@ -23,7 +23,7 @@ public interface ProcessService {
     ProcessResponse createProcess(ProcessRequest processRequest);
 
     /**
-     * Метод возвращает список всех процессов (активных и завершенных) клиента
+     * Метод возвращает список всех процессов (активных и завершенных) клиента.
      *
      * @param idClient Идентификатор клиента
      * @return Список процессов
@@ -31,7 +31,7 @@ public interface ProcessService {
     List<ProcessResponse> findAllClientProcesses(UUID idClient);
 
     /**
-     * Метод для изменения статуса процесса клиента со старого на новый
+     * Метод для изменения статуса процесса клиента со старого на новый.
      *
      * @param client Клиент
      * @param oldProcessStatus Старый статус процесса
@@ -41,7 +41,7 @@ public interface ProcessService {
                                      ProcessStatusEnum newProcessStatus);
 
     /**
-     * Метод для проверки наличия у клиента процесса в активном статусе с возвратом процесса
+     * Метод для проверки наличия у клиента процесса в активном статусе с возвратом процесса.
      *
      * @param client Клиент
      * @param processStatus Активный статус

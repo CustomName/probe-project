@@ -24,22 +24,22 @@ public class AccountController implements AccountsApi {
     private final AccountService accountService;
 
     @Override
-    public ResponseEntity<List<AccountResponse>> getAllClientAccounts(String idClient) {
-        List<AccountResponse> accounts = accountService.findAllClientAccounts(UUID.fromString(idClient));
+    public ResponseEntity<List<AccountResponse>> getAllClientAccounts(final String idClient) {
+        final List<AccountResponse> accounts = accountService.findAllClientAccounts(UUID.fromString(idClient));
 
         return ok(accounts);
     }
 
     @Override
-    public ResponseEntity<AccountResponse> postAccountReserve(AccountReserveRequest accountRequest) {
-        AccountResponse account = accountService.reserveAccount(accountRequest);
+    public ResponseEntity<AccountResponse> postAccountReserve(final AccountReserveRequest accountRequest) {
+        final AccountResponse account = accountService.reserveAccount(accountRequest);
 
         return new ResponseEntity<>(account, CREATED);
     }
 
     @Override
-    public ResponseEntity<List<AccountResponse>> patchAccountOpen(AccountOpenRequest accountOpenRequest) {
-        List<AccountResponse> accountResponses = accountService.openAccounts(accountOpenRequest);
+    public ResponseEntity<List<AccountResponse>> patchAccountOpen(final AccountOpenRequest accountOpenRequest) {
+        final List<AccountResponse> accountResponses = accountService.openAccounts(accountOpenRequest);
 
         return ok(accountResponses);
     }

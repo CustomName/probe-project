@@ -1,25 +1,25 @@
 package ru.axl.probeproject.model.enums;
 
 /**
- * Статус счета
+ * Статус счета.
  */
 public enum AccountStatusEnum {
 
     /**
-     * Счет зарезервирован
+     * Счет зарезервирован.
      */
     RESERVED,
     /**
-     * Счет на открытии
+     * Счет на открытии.
      */
     OPENING,
     /**
-     * Счет отклонен банком
+     * Счет отклонен банком.
      */
     REJECTED,
     /**
-     * Счет открыт
+     * Счет открыт.
      */
-    OPENED;
+    OPENED
 
 }

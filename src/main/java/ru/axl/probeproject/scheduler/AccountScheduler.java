@@ -33,12 +33,14 @@ public class AccountScheduler {
     @Transactional
     @Scheduled(fixedDelayString = "${scheduler-config.fixed-delay}",
             initialDelayString = "${scheduler-config.initial-delay}")
-    public void scheduleAccountsOpen(){
-        List<Account> accounts = accountRepo.findAllInStatusOpeningAndOpeningDateBefore(OPENING.name(),
+    public void scheduleAccountsOpen() {
+        final List<Account> accounts = accountRepo.findAllInStatusOpeningAndOpeningDateBefore(OPENING.name(),
                 getNowOffsetDateTime().minusSeconds(10));
-        if(accounts.isEmpty()) return;
-        AccountStatus opened = getStatus(OPENED);
-        AccountStatus rejected = getStatus(REJECTED);
+        if (accounts.isEmpty()) {
+            return;
+        }
+        final AccountStatus opened = getStatus(OPENED);
+        final AccountStatus rejected = getStatus(REJECTED);
 
         accounts.stream()
             .map(Account::getClient)
@@ -56,11 +58,11 @@ public class AccountScheduler {
         log.info("Результат открытия счетов\n {}", accounts);
     }
 
-    private AccountStatus getStatus(AccountStatusEnum accountStatusEnum){
+    private AccountStatus getStatus(final AccountStatusEnum accountStatusEnum) {
         return accountStatusService.findByName(accountStatusEnum.name());
     }
 
-    private String generateAccountNumber(Currency currency){
+    private String generateAccountNumber(final Currency currency) {
         return String.format("40702%s000000%d", currency.getCode(), randNumberWithBounds(111111, 999999));
     }
 

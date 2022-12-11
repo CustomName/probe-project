@@ -8,7 +8,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 /**
- * Репозиторий клиентов
+ * Репозиторий клиентов.
  */
 @Repository
 public interface ClientRepository extends JpaRepository<Client, Long> {

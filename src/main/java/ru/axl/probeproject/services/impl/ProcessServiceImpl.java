@@ -42,16 +42,16 @@ public class ProcessServiceImpl implements ProcessService {
 
     @Override
     @Transactional
-    public ProcessResponse createProcess(ProcessRequest processRequest) {
+    public ProcessResponse createProcess(final ProcessRequest processRequest) {
         log.info("Создание нового процесса для клиента с uuid = {}", processRequest.getIdClient());
 
-        Client client = clientRepo.findByIdClient(UUID.fromString(processRequest.getIdClient())).orElseThrow(() ->
+        final Client client = clientRepo.findByIdClient(UUID.fromString(processRequest.getIdClient())).orElseThrow(() ->
                 new ApiException(CLIENT_NOT_FOUND,
                         String.format("Не найден клиент с uuid = %s", processRequest.getIdClient())));
 
         checkNotTerminalProcessesByClient(client);
 
-        ProcessStatus processStatusNew = getProcessStatus(NEW);
+        final ProcessStatus processStatusNew = getProcessStatus(NEW);
 
         Process process = new Process();
         process.setClient(client);
@@ -60,18 +60,18 @@ public class ProcessServiceImpl implements ProcessService {
         process.setProcessStatus(processStatusNew);
         process = processRepo.save(process);
 
-        ProcessResponse processResponse = processMapper.toProcessResponse(process);
+        final ProcessResponse processResponse = processMapper.toProcessResponse(process);
         log.info("Процесс создан\n{}", processResponse);
 
         return processResponse;
     }
 
     @Override
-    public List<ProcessResponse> findAllClientProcesses(UUID idClient) {
+    public List<ProcessResponse> findAllClientProcesses(final UUID idClient) {
         log.info("Поиск всех процессов клиента с uuid = {}", idClient);
-        List<Process> processes = processRepo.findAllByIdClient(idClient);
+        final List<Process> processes = processRepo.findAllByIdClient(idClient);
 
-        List<ProcessResponse> processResponses = processMapper.toProcessResponseList(processes);
+        final List<ProcessResponse> processResponses = processMapper.toProcessResponseList(processes);
         log.info("Найдены процессы\n{}", processResponses);
 
         return processResponses;
@@ -79,11 +79,11 @@ public class ProcessServiceImpl implements ProcessService {
 
     @Override
     @Transactional
-    public void changeProcessStatusByClient(Client client, ProcessStatusEnum oldProcessStatus,
-                                            ProcessStatusEnum newProcessStatus) {
+    public void changeProcessStatusByClient(final Client client, final ProcessStatusEnum oldProcessStatus,
+                                            final ProcessStatusEnum newProcessStatus) {
         final ProcessStatus processStatus = getProcessStatus(newProcessStatus);
 
-        Process activeProcess = checkAndGetProcessActiveStatus(client, oldProcessStatus);
+        final Process activeProcess = checkAndGetProcessActiveStatus(client, oldProcessStatus);
 
         activeProcess.setLastUpdateDate(getNowOffsetDateTime());
         activeProcess.setProcessStatus(processStatus);
@@ -91,18 +91,18 @@ public class ProcessServiceImpl implements ProcessService {
     }
 
     @Override
-    public Process checkAndGetProcessActiveStatus(Client client, ProcessStatusEnum processStatus){
-        List<Process> processes = processRepo.findAllByIdClient(client.getIdClient());
+    public Process checkAndGetProcessActiveStatus(final Client client, final ProcessStatusEnum processStatus) {
+        final List<Process> processes = processRepo.findAllByIdClient(client.getIdClient());
 
-        List<Process> activeProcesses = processes.stream()
+        final List<Process> activeProcesses = processes.stream()
                 .filter(process -> process.getProcessStatus().getName().equals(processStatus.name()))
                 .collect(toList());
 
-        if(activeProcesses.size() == 0){
+        if (activeProcesses.size() == 0) {
             throw new ApiException(PROCESS_NOT_FOUND, "У клиента нет активного процесса");
         }
 
-        if(activeProcesses.size() > 1){
+        if (activeProcesses.size() > 1) {
             throw new ApiException(PROCESS_TOO_MUCH,
                     String.format("У клиента более 1 активного процесса:\n%s", activeProcesses));
         }
@@ -110,14 +110,14 @@ public class ProcessServiceImpl implements ProcessService {
         return activeProcesses.get(0);
     }
 
-    private ProcessStatus getProcessStatus(ProcessStatusEnum newProcessStatus){
+    private ProcessStatus getProcessStatus(final ProcessStatusEnum newProcessStatus) {
         return processStatusService.findByName(newProcessStatus.name());
     }
 
-    private void checkNotTerminalProcessesByClient(Client client){
-        List<Process> notTerminalProcesses = processRepo.findAllByIdClientInStatuses(client.getIdClient(),
+    private void checkNotTerminalProcessesByClient(final Client client) {
+        final List<Process> notTerminalProcesses = processRepo.findAllByIdClientInStatuses(client.getIdClient(),
                 notTerminalStatuses);
-        if(!notTerminalProcesses.isEmpty()){
+        if (!notTerminalProcesses.isEmpty()) {
             throw new ApiException(CLIENT_HAS_NOT_TERMINATED_PROCESSES,
                     String.format("У клиента есть незавершенные процессы:\n%s", notTerminalProcesses));
         }

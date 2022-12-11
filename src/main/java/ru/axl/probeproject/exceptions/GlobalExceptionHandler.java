@@ -20,7 +20,7 @@ import static ru.axl.probeproject.utils.Utils.getNowOffsetDateTime;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(ApiException.class)
-    public Error handleApiException(HttpServletResponse res, ApiException ex){
+    public Error handleApiException(final HttpServletResponse res, final ApiException ex) {
         log.error(ex.getMessage());
         res.setStatus(ex.getApiError().getHttpCode());
 
@@ -32,7 +32,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(Exception.class)
-    public Error handleException(HttpServletResponse res, Exception ex){
+    public Error handleException(final HttpServletResponse res, final Exception ex) {
         log.error(ex.getMessage());
         res.setStatus(INTERNAL_SERVER_ERROR.value());
 
@@ -44,7 +44,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(ValidationException.class)
-    public Error handleException(HttpServletResponse res, ValidationException ex){
+    public Error handleException(final HttpServletResponse res, final ValidationException ex) {
         log.error(ex.getMessage());
         res.setStatus(INTERNAL_SERVER_ERROR.value());
 

@@ -6,7 +6,7 @@ import ru.axl.probeproject.model.entities.Client;
 
 import java.util.List;
 
-@Mapper(uses = {UuidMapper.class})
+@Mapper(uses = UuidMapper.class)
 public interface ClientMapper {
 
     ClientResponse toClientResponse(Client client);

@@ -29,23 +29,23 @@ public class ProcessScheduler {
     @Transactional
     @Scheduled(fixedDelayString = "${scheduler-config.fixed-delay}",
             initialDelayString = "${scheduler-config.initial-delay}")
-    public void scheduleProcessStatus(){
-        ProcessStatus newStatus = processStatusService.findByName(NEW.name());
+    public void scheduleProcessStatus() {
+        final ProcessStatus newStatus = processStatusService.findByName(NEW.name());
 
-        List<Process> processes = processRepo.findAllWithStatusAndLastUpdateDateBefore(newStatus,
+        final List<Process> processes = processRepo.findAllWithStatusAndLastUpdateDateBefore(newStatus,
                 getNowOffsetDateTime().minusSeconds(10));
 
         processes.forEach(process -> {
-            if(complianceService.checkClient(process.getClient())){
+            if (complianceService.checkClient(process.getClient())) {
                 setStatus(process, COMPLIANCE_SUCCESS);
-            } else{
+            } else {
                 setStatus(process, COMPLIANCE_ERROR);
             }
         });
     }
 
-    private void setStatus(Process process, ProcessStatusEnum processStatusEnum){
-        ProcessStatus complianceSuccess = processStatusService.findByName(processStatusEnum.name());
+    private void setStatus(final Process process, final ProcessStatusEnum processStatusEnum) {
+        final ProcessStatus complianceSuccess = processStatusService.findByName(processStatusEnum.name());
         process.setProcessStatus(complianceSuccess);
         process.setLastUpdateDate(getNowOffsetDateTime());
         processRepo.save(process);

@@ -7,31 +7,32 @@ import java.time.ZoneId;
 import java.util.Random;
 
 /**
- * Общий утилитный класс
+ * Общий утилитный класс.
  */
+@SuppressWarnings("checkstyle:HideUtilityClassConstructor")
 @UtilityClass
 public class Utils {
 
-    private static final Random rand = new Random();
+    private static final Random RAND = new Random();
 
     /**
-     * Метод возвращает текущую дату в таймзоне <strong>Europe/Moscow</strong>
+     * Метод возвращает текущую дату в таймзоне <strong>Europe/Moscow</strong>.
      *
      * @return Дата
      */
-    public static OffsetDateTime getNowOffsetDateTime(){
+    public static OffsetDateTime getNowOffsetDateTime() {
         return OffsetDateTime.now(ZoneId.of("Europe/Moscow"));
     }
 
     /**
-     * Метод возвращает случайное число в заданном диапазоне
+     * Метод возвращает случайное число в заданном диапазоне.
      *
      * @param left Левая граница диапазона
      * @param right Правая граница диапазона
      * @return Случайное число
      */
-    public static int randNumberWithBounds(int left, int right){
-        return rand.nextInt(right - left) + left;
+    public static int randNumberWithBounds(final int left, final int right) {
+        return RAND.nextInt(right - left) + left;
     }
 
 }

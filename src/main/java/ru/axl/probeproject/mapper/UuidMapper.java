@@ -9,8 +9,8 @@ import static java.util.Objects.isNull;
 @Mapper
 public interface UuidMapper {
 
-    default String asString(UUID uuid){
-        if (isNull(uuid)){
+    default String asString(UUID uuid) {
+        if (isNull(uuid)) {
             return null;
         }
 

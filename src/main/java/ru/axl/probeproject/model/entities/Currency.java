@@ -10,18 +10,18 @@ import javax.persistence.*;
 import java.util.UUID;
 
 /**
- * Сущность валюты
+ * Сущность валюты.
  */
 @Entity
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name="CURRENCIES")
+@Table(name = "CURRENCIES")
 public class Currency {
 
     /**
-     * Идентификатор
+     * Идентификатор.
      */
     @Id
     @GeneratedValue(generator = "UUID")
@@ -30,21 +30,21 @@ public class Currency {
     private UUID idCurrency;
 
     /**
-     * Код
+     * Код.
      */
-    @Column(name="CODE", length=3, nullable=false, unique=true)
+    @Column(name = "CODE", length = 3, nullable = false, unique = true)
     private String code;
 
     /**
-     * ISO
+     * ISO.
      */
-    @Column(name="ISO", length=3, nullable=false, unique=true)
+    @Column(name = "ISO", length = 3, nullable = false, unique = true)
     private String iso;
 
     /**
-     * Имя
+     * Имя.
      */
-    @Column(name="NAME", length=30, nullable=false)
+    @Column(name = "NAME", length = 30, nullable = false)
     private String name;
 
 }

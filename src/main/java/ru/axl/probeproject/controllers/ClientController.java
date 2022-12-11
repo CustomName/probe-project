@@ -21,14 +21,14 @@ public class ClientController implements ClientsApi {
 
     @Override
     public ResponseEntity<List<ClientResponse>> getClients() {
-        List<ClientResponse> clientResponses = clientService.findAll();
+        final List<ClientResponse> clientResponses = clientService.findAll();
 
         return ok(clientResponses);
     }
 
     @Override
-    public ResponseEntity<ClientResponse> findClientByInn(String inn) {
-        ClientResponse clientResponse = clientService.findByInn(inn);
+    public ResponseEntity<ClientResponse> findClientByInn(final String inn) {
+        final ClientResponse clientResponse = clientService.findByInn(inn);
 
         return ok(clientResponse);
     }

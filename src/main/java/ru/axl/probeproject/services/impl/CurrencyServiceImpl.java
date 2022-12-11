@@ -27,9 +27,9 @@ public class CurrencyServiceImpl implements CurrencyService {
     @Cacheable("currenciesCache")
     public List<CurrencyResponse> getCurrencies() {
         log.info("Получение кодов валют");
-        List<Currency> currencies = currencyRepo.findAll();
+        final List<Currency> currencies = currencyRepo.findAll();
 
-        List<CurrencyResponse> currencyResponses = currencyMapper.toCurrencyResponseList(currencies);
+        final List<CurrencyResponse> currencyResponses = currencyMapper.toCurrencyResponseList(currencies);
         log.info("Найдены коды валют\n {}", currencyResponses);
 
         return currencyResponses;
@@ -37,7 +37,7 @@ public class CurrencyServiceImpl implements CurrencyService {
 
     @Override
     @Cacheable(value = "currencyCache", key = "#code")
-    public Currency findByCode(String code) {
+    public Currency findByCode(final String code) {
         return currencyRepo.findByCode(code).orElseThrow(() ->
                 new ApiException(CURRENCY_NOT_FOUND,
                         String.format("Не найден код валюты с code = \"%s\"", code)));

@@ -10,18 +10,18 @@ import javax.persistence.*;
 import java.util.UUID;
 
 /**
- * Сущность процесса
+ * Сущность процесса.
  */
 @Entity
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name="PROCESS_STATUSES")
+@Table(name = "PROCESS_STATUSES")
 public class ProcessStatus {
 
     /**
-     * Идентификатор
+     * Идентификатор.
      */
     @Id
     @GeneratedValue(generator = "UUID")
@@ -30,15 +30,15 @@ public class ProcessStatus {
     private UUID idProcessStatus;
 
     /**
-     * Имя
+     * Имя.
      */
-    @Column(name="NAME", length=30, nullable=false)
+    @Column(name = "NAME", length = 30, nullable = false)
     private String name;
 
     /**
-     * Описание
+     * Описание.
      */
-    @Column(name="DESCRIPTION", length=200, nullable=false)
+    @Column(name = "DESCRIPTION", length = 200, nullable = false)
     private String description;
 
 }

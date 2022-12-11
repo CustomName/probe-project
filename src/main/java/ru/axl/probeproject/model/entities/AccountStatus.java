@@ -10,18 +10,18 @@ import javax.persistence.*;
 import java.util.UUID;
 
 /**
- * Сущность статуса счета
+ * Сущность статуса счета.
  */
 @Entity
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name="ACCOUNT_STATUSES")
+@Table(name = "ACCOUNT_STATUSES")
 public class AccountStatus {
 
     /**
-     * Идентификатор
+     * Идентификатор.
      */
     @Id
     @GeneratedValue(generator = "UUID")
@@ -30,15 +30,15 @@ public class AccountStatus {
     private UUID idAccountStatus;
 
     /**
-     * Имя
+     * Имя.
      */
-    @Column(name="NAME", length=30, nullable=false)
+    @Column(name = "NAME", length = 30, nullable = false)
     private String name;
 
     /**
-     * Описание
+     * Описание.
      */
-    @Column(name="DESCRIPTION", length=200, nullable=false)
+    @Column(name = "DESCRIPTION", length = 200, nullable = false)
     private String description;
 
 }

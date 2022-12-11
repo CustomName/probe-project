@@ -6,7 +6,7 @@ import ru.axl.probeproject.model.entities.Currency;
 
 import java.util.List;
 
-@Mapper(uses = {UuidMapper.class})
+@Mapper(uses = UuidMapper.class)
 public interface CurrencyMapper {
 
     CurrencyResponse toCurrencyResponse(Currency currency);
