@@ -12,10 +12,12 @@ import ru.axl.probeproject.repositories.AccountRepository;
 import ru.axl.probeproject.services.AccountStatusService;
 import ru.axl.probeproject.services.ProcessService;
 
-import javax.transaction.Transactional;
 import java.util.List;
+import javax.transaction.Transactional;
 
-import static ru.axl.probeproject.model.enums.AccountStatusEnum.*;
+import static ru.axl.probeproject.model.enums.AccountStatusEnum.OPENED;
+import static ru.axl.probeproject.model.enums.AccountStatusEnum.OPENING;
+import static ru.axl.probeproject.model.enums.AccountStatusEnum.REJECTED;
 import static ru.axl.probeproject.model.enums.ProcessStatusEnum.ACCOUNT_PROCESSING;
 import static ru.axl.probeproject.model.enums.ProcessStatusEnum.DONE;
 import static ru.axl.probeproject.utils.Utils.getNowOffsetDateTime;

@@ -8,9 +8,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.time.OffsetDateTime;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.ValidationException;
-import java.time.OffsetDateTime;
 
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 import static ru.axl.probeproject.utils.Utils.getNowOffsetDateTime;

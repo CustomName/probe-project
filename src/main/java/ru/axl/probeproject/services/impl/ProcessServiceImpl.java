@@ -16,14 +16,20 @@ import ru.axl.probeproject.repositories.ProcessRepository;
 import ru.axl.probeproject.services.ProcessService;
 import ru.axl.probeproject.services.ProcessStatusService;
 
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
+import javax.transaction.Transactional;
 
 import static java.util.stream.Collectors.toList;
-import static ru.axl.probeproject.exceptions.ApiError.*;
-import static ru.axl.probeproject.model.enums.ProcessStatusEnum.*;
+import static ru.axl.probeproject.exceptions.ApiError.CLIENT_HAS_NOT_TERMINATED_PROCESSES;
+import static ru.axl.probeproject.exceptions.ApiError.CLIENT_NOT_FOUND;
+import static ru.axl.probeproject.exceptions.ApiError.PROCESS_NOT_FOUND;
+import static ru.axl.probeproject.exceptions.ApiError.PROCESS_TOO_MUCH;
+import static ru.axl.probeproject.model.enums.ProcessStatusEnum.ACCOUNT_PROCESSING;
+import static ru.axl.probeproject.model.enums.ProcessStatusEnum.COMPLIANCE_ERROR;
+import static ru.axl.probeproject.model.enums.ProcessStatusEnum.COMPLIANCE_SUCCESS;
+import static ru.axl.probeproject.model.enums.ProcessStatusEnum.NEW;
 import static ru.axl.probeproject.utils.Utils.getNowOffsetDateTime;
 
 @Slf4j

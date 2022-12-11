@@ -11,10 +11,12 @@ import ru.axl.probeproject.repositories.ProcessRepository;
 import ru.axl.probeproject.services.ComplianceService;
 import ru.axl.probeproject.services.ProcessStatusService;
 
-import javax.transaction.Transactional;
 import java.util.List;
+import javax.transaction.Transactional;
 
-import static ru.axl.probeproject.model.enums.ProcessStatusEnum.*;
+import static ru.axl.probeproject.model.enums.ProcessStatusEnum.COMPLIANCE_ERROR;
+import static ru.axl.probeproject.model.enums.ProcessStatusEnum.COMPLIANCE_SUCCESS;
+import static ru.axl.probeproject.model.enums.ProcessStatusEnum.NEW;
 import static ru.axl.probeproject.utils.Utils.getNowOffsetDateTime;
 
 @Slf4j

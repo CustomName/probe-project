@@ -19,10 +19,10 @@ import ru.axl.probeproject.services.AccountStatusService;
 import ru.axl.probeproject.services.CurrencyService;
 import ru.axl.probeproject.services.ProcessService;
 
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
+import javax.transaction.Transactional;
 
 import static ru.axl.probeproject.exceptions.ApiError.CLIENT_NOT_FOUND;
 import static ru.axl.probeproject.exceptions.ApiError.RESERVED_ACCOUNTS_NOT_FOUND;
