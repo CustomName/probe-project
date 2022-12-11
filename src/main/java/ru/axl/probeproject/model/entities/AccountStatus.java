@@ -6,22 +6,26 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.*;
 import java.util.UUID;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
- * Сущность статуса счета
+ * Сущность статуса счета.
  */
 @Entity
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name="ACCOUNT_STATUSES")
+@Table(name = "ACCOUNT_STATUSES")
 public class AccountStatus {
 
     /**
-     * Идентификатор
+     * Идентификатор.
      */
     @Id
     @GeneratedValue(generator = "UUID")
@@ -30,15 +34,15 @@ public class AccountStatus {
     private UUID idAccountStatus;
 
     /**
-     * Имя
+     * Имя.
      */
-    @Column(name="NAME", length=30, nullable=false)
+    @Column(name = "NAME", length = 30, nullable = false)
     private String name;
 
     /**
-     * Описание
+     * Описание.
      */
-    @Column(name="DESCRIPTION", length=200, nullable=false)
+    @Column(name = "DESCRIPTION", length = 200, nullable = false)
     private String description;
 
 }

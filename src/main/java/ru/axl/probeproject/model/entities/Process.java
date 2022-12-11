@@ -6,23 +6,29 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.*;
 import java.time.OffsetDateTime;
 import java.util.UUID;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 /**
- * Сущность процесса
+ * Сущность процесса.
  */
 @Entity
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name="PROCESSES")
+@Table(name = "PROCESSES")
 public class Process {
 
     /**
-     * Идентификатор
+     * Идентификатор.
      */
     @Id
     @GeneratedValue(generator = "UUID")
@@ -31,26 +37,26 @@ public class Process {
     private UUID idProcess;
 
     /**
-     * Клиент
+     * Клиент.
      */
     @ManyToOne
     @JoinColumn(name = "ID_CLIENT")
     private Client client;
 
     /**
-     * Дата начала процесса
+     * Дата начала процесса.
      */
     @Column(name = "START_DATE")
     private OffsetDateTime startDate;
 
     /**
-     * Дата последнего обновления
+     * Дата последнего обновления.
      */
     @Column(name = "LAST_UPDATE_DATE")
     private OffsetDateTime lastUpdateDate;
 
     /**
-     * Статус процесса
+     * Статус процесса.
      */
     @ManyToOne
     @JoinColumn(name = "ID_PROCESS_STATUS")

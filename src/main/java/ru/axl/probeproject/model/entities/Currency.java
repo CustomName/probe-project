@@ -6,22 +6,26 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.*;
 import java.util.UUID;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
- * Сущность валюты
+ * Сущность валюты.
  */
 @Entity
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name="CURRENCIES")
+@Table(name = "CURRENCIES")
 public class Currency {
 
     /**
-     * Идентификатор
+     * Идентификатор.
      */
     @Id
     @GeneratedValue(generator = "UUID")
@@ -30,21 +34,21 @@ public class Currency {
     private UUID idCurrency;
 
     /**
-     * Код
+     * Код.
      */
-    @Column(name="CODE", length=3, nullable=false, unique=true)
+    @Column(name = "CODE", length = 3, nullable = false, unique = true)
     private String code;
 
     /**
-     * ISO
+     * ISO.
      */
-    @Column(name="ISO", length=3, nullable=false, unique=true)
+    @Column(name = "ISO", length = 3, nullable = false, unique = true)
     private String iso;
 
     /**
-     * Имя
+     * Имя.
      */
-    @Column(name="NAME", length=30, nullable=false)
+    @Column(name = "NAME", length = 30, nullable = false)
     private String name;
 
 }

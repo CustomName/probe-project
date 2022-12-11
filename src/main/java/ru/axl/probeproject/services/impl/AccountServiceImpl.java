@@ -19,10 +19,10 @@ import ru.axl.probeproject.services.AccountStatusService;
 import ru.axl.probeproject.services.CurrencyService;
 import ru.axl.probeproject.services.ProcessService;
 
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
+import javax.transaction.Transactional;
 
 import static ru.axl.probeproject.exceptions.ApiError.CLIENT_NOT_FOUND;
 import static ru.axl.probeproject.exceptions.ApiError.RESERVED_ACCOUNTS_NOT_FOUND;
@@ -45,11 +45,11 @@ public class AccountServiceImpl implements AccountService {
     private final AccountMapper accountMapper;
 
     @Override
-    public List<AccountResponse> findAllClientAccounts(UUID idClient) {
+    public List<AccountResponse> findAllClientAccounts(final UUID idClient) {
         log.info("Поиск всех счетов клиента с uuid = {}", idClient);
-        List<Account> accounts = accountRepo.findAllByIdClient(idClient);
+        final List<Account> accounts = accountRepo.findAllByIdClient(idClient);
 
-        List<AccountResponse> accountResponses = accountMapper.toAccountResponseList(accounts);
+        final List<AccountResponse> accountResponses = accountMapper.toAccountResponseList(accounts);
         log.info("Найдены счета\n {}", accountResponses);
 
         return accountResponses;
@@ -57,28 +57,28 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     @Transactional
-    public AccountResponse reserveAccount(AccountReserveRequest accountRequest) {
+    public AccountResponse reserveAccount(final AccountReserveRequest accountRequest) {
         log.info("Резервирование счета:\n {}", accountRequest);
-        UUID idClient = UUID.fromString(accountRequest.getIdClient());
+        final UUID idClient = UUID.fromString(accountRequest.getIdClient());
         log.info("Поиск клиента по idClient = {}", idClient);
-        Client client = clientRepo.findByIdClient(idClient).orElseThrow(() ->
+        final Client client = clientRepo.findByIdClient(idClient).orElseThrow(() ->
                 new ApiException(CLIENT_NOT_FOUND, String.format("Не найден клиент с idClient = \"%s\"", idClient)));
 
-        AccountStatus accountStatusReserve = accountStatusService.findByName(RESERVED.name());
+        final AccountStatus accountStatusReserve = accountStatusService.findByName(RESERVED.name());
 
         processService.checkAndGetProcessActiveStatus(client, COMPLIANCE_SUCCESS);
 
-        Currency currency = currencyService.findByCode(accountRequest.getCode());
+        final Currency currency = currencyService.findByCode(accountRequest.getCode());
 
-        Account account = new Account();
+        final Account account = new Account();
         account.setNumber(generateReserveAccountNumber(currency));
         account.setCurrency(currency);
         account.setClient(client);
         account.setReservationDate(getNowOffsetDateTime());
         account.setAccountStatus(accountStatusReserve);
 
-        Account savedAccount = accountRepo.save(account);
-        AccountResponse accountResponse = accountMapper.toAccountResponse(savedAccount);
+        final Account savedAccount = accountRepo.save(account);
+        final AccountResponse accountResponse = accountMapper.toAccountResponse(savedAccount);
         log.info("Счет зарезервирован:\n {}", accountResponse);
 
         return accountResponse;
@@ -86,19 +86,19 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     @Transactional
-    public List<AccountResponse> openAccounts(AccountOpenRequest accountRequest) {
+    public List<AccountResponse> openAccounts(final AccountOpenRequest accountRequest) {
         log.info("Открытие зарезервированных счетов:\n {}", accountRequest);
-        UUID idClient = UUID.fromString(accountRequest.getIdClient());
+        final UUID idClient = UUID.fromString(accountRequest.getIdClient());
         log.info("Поиск клиента по idClient = {}", idClient);
-        Client client = clientRepo.findByIdClient(idClient).orElseThrow(() ->
+        final Client client = clientRepo.findByIdClient(idClient).orElseThrow(() ->
                 new ApiException(CLIENT_NOT_FOUND, String.format("Не найден клиент с idClient = \"%s\"", idClient)));
 
-        AccountStatus accountStatusOpening = accountStatusService.findByName(OPENING.name());
+        final AccountStatus accountStatusOpening = accountStatusService.findByName(OPENING.name());
 
-        List<Account> reservedAccounts = accountRepo.findAllByIdClient(client.getIdClient()).stream()
+        final List<Account> reservedAccounts = accountRepo.findAllByIdClient(client.getIdClient()).stream()
                 .filter(account -> account.getAccountStatus().getName().equals(RESERVED.name()))
                 .collect(Collectors.toList());
-        if(reservedAccounts.isEmpty()){
+        if (reservedAccounts.isEmpty()) {
             throw new ApiException(RESERVED_ACCOUNTS_NOT_FOUND, "Зарезервированных счетов не найдено");
         }
 
@@ -110,13 +110,13 @@ public class AccountServiceImpl implements AccountService {
         });
         accountRepo.saveAll(reservedAccounts);
 
-        List<AccountResponse> accountResponses = accountMapper.toAccountResponseList(reservedAccounts);
+        final List<AccountResponse> accountResponses = accountMapper.toAccountResponseList(reservedAccounts);
         log.info("Счета отправленные на открытие:\n {}", accountResponses);
 
         return accountResponses;
     }
 
-    private String generateReserveAccountNumber(Currency currency){
+    private String generateReserveAccountNumber(final Currency currency) {
         return String.format("40702%sXXXXXXXXXXXX", currency.getCode());
     }
 

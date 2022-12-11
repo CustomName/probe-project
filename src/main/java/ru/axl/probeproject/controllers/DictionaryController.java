@@ -21,7 +21,7 @@ public class DictionaryController implements DictionariesApi {
 
     @Override
     public ResponseEntity<List<CurrencyResponse>> getCurrencies() {
-        List<CurrencyResponse> currencies = currencyService.getCurrencies();
+        final List<CurrencyResponse> currencies = currencyService.getCurrencies();
 
         return ok(currencies);
     }

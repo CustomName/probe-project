@@ -23,15 +23,15 @@ public class ProcessController implements ProcessesApi {
     private final ProcessService processService;
 
     @Override
-    public ResponseEntity<List<ProcessResponse>> getAllClientProcesses(String idClient) {
-        List<ProcessResponse> clientProcesses = processService.findAllClientProcesses(UUID.fromString(idClient));
+    public ResponseEntity<List<ProcessResponse>> getAllClientProcesses(final String idClient) {
+        final List<ProcessResponse> clientProcesses = processService.findAllClientProcesses(UUID.fromString(idClient));
 
         return ok(clientProcesses);
     }
 
     @Override
-    public ResponseEntity<ProcessResponse> postProcess(ProcessRequest processRequest) {
-        ProcessResponse processResponse = processService.createProcess(processRequest);
+    public ResponseEntity<ProcessResponse> postProcess(final ProcessRequest processRequest) {
+        final ProcessResponse processResponse = processService.createProcess(processRequest);
 
         return new ResponseEntity<>(processResponse, CREATED);
     }

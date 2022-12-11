@@ -27,9 +27,9 @@ public class ProcessStatusServiceImpl implements ProcessStatusService {
     @Cacheable("processStatusesCache")
     public List<ProcessStatusResponse> getAllProcessStatuses() {
         log.info("Получение всех статусов процесса");
-        List<ProcessStatus> processStatuses = processStatusRepo.findAll();
+        final List<ProcessStatus> processStatuses = processStatusRepo.findAll();
 
-        List<ProcessStatusResponse> processStatusResponses = processStatusMapper.toProcessStatusResponseList(processStatuses);
+        final List<ProcessStatusResponse> processStatusResponses = processStatusMapper.toProcessStatusResponseList(processStatuses);
         log.info("Найдены статусы процесса\n {}", processStatusResponses);
 
         return processStatusResponses;
@@ -37,7 +37,7 @@ public class ProcessStatusServiceImpl implements ProcessStatusService {
 
     @Override
     @Cacheable(value = "processStatus", key = "#name")
-    public ProcessStatus findByName(String name) {
+    public ProcessStatus findByName(final String name) {
         return processStatusRepo.findByName(name).orElseThrow(() ->
                 new ApiException(PROCESS_STATUS_NOT_FOUND,
                         String.format("Не найден статус процесса с name = '%s'", name)));

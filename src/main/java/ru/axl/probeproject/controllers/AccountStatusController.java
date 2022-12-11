@@ -21,7 +21,7 @@ public class AccountStatusController implements AccountStatusesApi {
 
     @Override
     public ResponseEntity<List<AccountStatusResponse>> getAllAccountStatuses() {
-        List<AccountStatusResponse> accountStatuses = accountStatusService.getAllAccountStatuses();
+        final List<AccountStatusResponse> accountStatuses = accountStatusService.getAllAccountStatuses();
 
         return ok(accountStatuses);
     }

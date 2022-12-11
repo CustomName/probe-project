@@ -15,8 +15,8 @@ import javax.servlet.http.HttpServletRequest;
 public class ControllerLogger {
 
     @Before("execution(* ru.axl.probeproject.controllers.*.*(..))")
-    public void requestLog(){
-        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder
+    public void requestLog() {
+        final HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder
                 .currentRequestAttributes()).getRequest();
         log.info(request.getRequestURL().toString());
     }

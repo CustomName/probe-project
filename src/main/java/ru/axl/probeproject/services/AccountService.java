@@ -8,12 +8,12 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * Сервис для работы со счетами клиента
+ * Сервис для работы со счетами клиента.
  */
 public interface AccountService {
 
     /**
-     * Метод возвращает все счета клиента
+     * Метод возвращает все счета клиента.
      *
      * @param idClient Идентификатор клиента
      * @return Список счетов клиента
@@ -21,7 +21,7 @@ public interface AccountService {
     List<AccountResponse> findAllClientAccounts(UUID idClient);
 
     /**
-     * Метод резервирования счета
+     * Метод резервирования счета.
      *
      * @param accountRequest Запрос для резервирования счета
      * @return Зарезервированный счет
@@ -29,7 +29,7 @@ public interface AccountService {
     AccountResponse reserveAccount(AccountReserveRequest accountRequest);
 
     /**
-     * Метод открытия зарезервированных счетов
+     * Метод открытия зарезервированных счетов.
      *
      * @param accountRequest Запрос для открытия счетов
      * @return Список счетов отправленных на открытие

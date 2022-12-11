@@ -27,9 +27,9 @@ public class AccountStatusServiceImpl implements AccountStatusService {
     @Cacheable("accountStatusesCache")
     public List<AccountStatusResponse> getAllAccountStatuses() {
         log.info("Получение всех статусов счета");
-        List<AccountStatus> accountStatuses = accountStatusRepo.findAll();
+        final List<AccountStatus> accountStatuses = accountStatusRepo.findAll();
 
-        List<AccountStatusResponse> accountStatusResponses = accountStatusMapper.toAccountStatusResponseList(accountStatuses);
+        final List<AccountStatusResponse> accountStatusResponses = accountStatusMapper.toAccountStatusResponseList(accountStatuses);
         log.info("Найдены статусы счета\n {}", accountStatusResponses);
 
         return accountStatusResponses;
@@ -37,9 +37,9 @@ public class AccountStatusServiceImpl implements AccountStatusService {
 
     @Override
     @Cacheable(value = "accountStatusCache", key = "#name")
-    public AccountStatus findByName(String name) {
+    public AccountStatus findByName(final String name) {
         log.info("Получение статуса счета с name = " + name);
-        AccountStatus accountStatus = accountStatusRepo.findByName(name).orElseThrow(() ->
+        final AccountStatus accountStatus = accountStatusRepo.findByName(name).orElseThrow(() ->
                         new ApiException(ACCOUNT_STATUS_NOT_FOUND,
                                 String.format("Не найден статус счета с name = \"%s\"", name)));
 

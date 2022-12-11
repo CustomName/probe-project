@@ -7,7 +7,7 @@ import ru.axl.probeproject.model.entities.ProcessStatus;
 import java.util.Optional;
 
 /**
- * Репозиторий статусов процесса
+ * Репозиторий статусов процесса.
  */
 @Repository
 public interface ProcessStatusRepository extends JpaRepository<ProcessStatus, Long> {

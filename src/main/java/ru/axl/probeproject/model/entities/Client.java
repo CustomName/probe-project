@@ -6,22 +6,26 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.*;
 import java.util.UUID;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
- * Сущность клиента
+ * Сущность клиента.
  */
 @Entity
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name="CLIENTS")
+@Table(name = "CLIENTS")
 public class Client {
 
     /**
-     * Идентификатор
+     * Идентификатор.
      */
     @Id
     @GeneratedValue(generator = "UUID")
@@ -30,15 +34,15 @@ public class Client {
     private UUID idClient;
 
     /**
-     * ФИО
+     * ФИО.
      */
-    @Column(name="FIO", length=100, nullable=false)
+    @Column(name = "FIO", length = 100, nullable = false)
     private String fio;
 
     /**
-     * ИНН
+     * ИНН.
      */
-    @Column(name="INN", length=12, nullable=false, unique=true)
+    @Column(name = "INN", length = 12, nullable = false, unique = true)
     private String inn;
 
 }

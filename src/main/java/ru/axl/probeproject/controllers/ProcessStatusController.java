@@ -21,7 +21,7 @@ public class ProcessStatusController implements ProcessStatusesApi {
 
     @Override
     public ResponseEntity<List<ProcessStatusResponse>> getAllProcessStatuses() {
-        List<ProcessStatusResponse> processStatuses = processStatusService.getAllProcessStatuses();
+        final List<ProcessStatusResponse> processStatuses = processStatusService.getAllProcessStatuses();
 
         return ok(processStatuses);
     }

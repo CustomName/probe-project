@@ -13,7 +13,7 @@ import java.util.Set;
 import java.util.UUID;
 
 /**
- * Репозиторий процессов
+ * Репозиторий процессов.
  */
 @Repository
 public interface ProcessRepository extends JpaRepository<Process, Long> {

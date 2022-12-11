@@ -14,7 +14,7 @@ public class ComplianceServiceImpl implements ComplianceService {
     private final Set<String> badInnSets = Set.of("111111111112");
 
     @Override
-    public boolean checkClient(Client client) {
+    public boolean checkClient(final Client client) {
         return !badInnSets.contains(client.getInn());
     }
 
