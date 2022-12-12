@@ -38,18 +38,18 @@ class CurrencyServiceTest extends BaseServiceTest {
 
     @Test
     void shouldGetCurrencies() {
-        List<Currency> currencies = getCurrencies();
-        List<CurrencyResponse> currencyResponses = getCurrencyResponses();
+        final List<Currency> currencies = getCurrencies();
+        final List<CurrencyResponse> currencyResponses = getCurrencyResponses();
         when(currencyRepo.findAll()).thenReturn(currencies);
         when(currencyMapper.toCurrencyResponseList(currencies)).thenReturn(currencyResponses);
 
-        List<CurrencyResponse> allCurrencies = currencyService.getCurrencies();
+        final List<CurrencyResponse> allCurrencies = currencyService.getCurrencies();
 
         assertThat(allCurrencies).hasSize(2);
         assertThat(allCurrencies).containsAll(currencyResponses);
     }
 
-    private List<Currency> getCurrencies(){
+    private List<Currency> getCurrencies() {
         return List.of(
                 Currency.builder()
                         .idCurrency(uuid1)
@@ -66,7 +66,7 @@ class CurrencyServiceTest extends BaseServiceTest {
         );
     }
 
-    private List<CurrencyResponse> getCurrencyResponses(){
+    private List<CurrencyResponse> getCurrencyResponses() {
         return List.of(
                 new CurrencyResponse()
                         .idCurrency(uuid1.toString())

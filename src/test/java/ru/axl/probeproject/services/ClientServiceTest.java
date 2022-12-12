@@ -31,17 +31,16 @@ class ClientServiceTest extends BaseServiceTest {
     private final UUID uuidClient1 = UUID.randomUUID();
     private final UUID uuidClient2 = UUID.randomUUID();
     private final String clientInn = "111111111111";
-    private final String clientFio = "Петров Петр Иванович";
 
     @Test
     void shouldFindAll() {
-        List<Client> clients = List.of(getClient(uuidClient1), getClient(uuidClient2));
-        List<ClientResponse> clientResponses = List.of(getClientResponse(uuidClient1.toString()),
+        final List<Client> clients = List.of(getClient(uuidClient1), getClient(uuidClient2));
+        final List<ClientResponse> clientResponses = List.of(getClientResponse(uuidClient1.toString()),
                 getClientResponse(uuidClient2.toString()));
         when(clientRepo.findAll()).thenReturn(clients);
         when(clientMapper.toClientResponseList(clients)).thenReturn(clientResponses);
 
-        List<ClientResponse> responses = clientService.findAll();
+        final List<ClientResponse> responses = clientService.findAll();
 
         assertThat(responses).hasSize(2);
     }
@@ -53,22 +52,22 @@ class ClientServiceTest extends BaseServiceTest {
         when(clientRepo.findByInn(clientInn)).thenReturn(Optional.of(client));
         when(clientMapper.toClientResponse(client)).thenReturn(clientResponse);
 
-        ClientResponse foundClient = clientService.findByInn(clientInn);
+        final ClientResponse foundClient = clientService.findByInn(clientInn);
 
         assertThat(foundClient).isNotNull();
         assertThat(foundClient).isEqualTo(clientResponse);
     }
 
-    private Client getClient(UUID uuidClient){
+    private Client getClient(final UUID uuidClient) {
         return Client.builder()
                 .idClient(uuidClient)
                 .build();
     }
 
-    private ClientResponse getClientResponse(String uuidClient){
+    private ClientResponse getClientResponse(final String uuidClient) {
         return new ClientResponse()
                 .idClient(uuidClient)
-                .fio(clientFio)
+                .fio("Петров Петр Иванович")
                 .inn(clientInn);
     }
 

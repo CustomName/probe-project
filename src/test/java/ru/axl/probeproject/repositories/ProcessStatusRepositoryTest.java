@@ -15,7 +15,7 @@ class ProcessStatusRepositoryTest extends BaseRepositoryTest {
     @Test
     void shouldFindByName() {
         final String processStatusName = "NEW";
-        ProcessStatus processStatus = processStatusRepo.findByName(processStatusName).orElseThrow();
+        final ProcessStatus processStatus = processStatusRepo.findByName(processStatusName).orElseThrow();
 
         assertThat(processStatus).isNotNull();
         assertThat(processStatus.getName()).isEqualTo(processStatusName);

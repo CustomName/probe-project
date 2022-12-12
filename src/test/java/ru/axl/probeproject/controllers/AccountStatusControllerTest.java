@@ -40,8 +40,8 @@ class AccountStatusControllerTest extends BaseControllerTest {
     }
 
     @Test
-    void whenGetAllAccountStatuses_thenStatus200() throws Exception {
-        List<AccountStatusResponse> accountStatusResp = List.of(
+    void whenGetAllAccountStatusesThenStatus200() throws Exception {
+        final List<AccountStatusResponse> accountStatusResp = List.of(
                 new AccountStatusResponse().idAccountStatus(UUID.randomUUID().toString()),
                 new AccountStatusResponse().idAccountStatus(UUID.randomUUID().toString()),
                 new AccountStatusResponse().idAccountStatus(UUID.randomUUID().toString())
@@ -49,13 +49,13 @@ class AccountStatusControllerTest extends BaseControllerTest {
 
         when(accountStatusService.getAllAccountStatuses()).thenReturn(accountStatusResp);
 
-        MockHttpServletResponse resp = mvc.perform(get("/account-statuses")
+        final MockHttpServletResponse resp = mvc.perform(get("/account-statuses")
                         .contentType(APPLICATION_JSON))
                 .andReturn().getResponse();
 
         assertThat(resp.getStatus()).isEqualTo(OK.value());
 
-        List<AccountStatusResponse> respList = objectMapper.readValue(resp.getContentAsString(), new TypeReference<>() {});
+        final List<AccountStatusResponse> respList = objectMapper.readValue(resp.getContentAsString(), new TypeReference<>() { });
         assertThat(respList).hasSize(3);
         assertThat(respList).isEqualTo(accountStatusResp);
     }

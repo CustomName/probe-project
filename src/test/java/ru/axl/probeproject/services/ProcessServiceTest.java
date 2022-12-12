@@ -50,18 +50,18 @@ class ProcessServiceTest extends BaseServiceTest {
 
     @Test
     void createProcess() {
-        Client client = getClient();
-        ProcessStatus processStatus = getProcessStatus();
-        Process process = getProcess(uuidProcess1);
-        ProcessResponse processResponse = getProcessResponse(uuidProcess1);
+        final Client client = getClient();
+        final ProcessStatus processStatus = getProcessStatus();
+        final Process process = getProcess(uuidProcess1);
+        final ProcessResponse processResponse = getProcessResponse(uuidProcess1);
         when(clientRepo.findByIdClient(client.getIdClient())).thenReturn(Optional.of(client));
         when(processStatusService.findByName(processStatus.getName())).thenReturn(processStatus);
         when(processRepo.save(any())).thenReturn(process);
         when(processMapper.toProcessResponse(process)).thenReturn(processResponse);
 
-        ProcessRequest processRequest = new ProcessRequest()
+        final ProcessRequest processRequest = new ProcessRequest()
                 .idClient(client.getIdClient().toString());
-        ProcessResponse resp = processService.createProcess(processRequest);
+        final ProcessResponse resp = processService.createProcess(processRequest);
 
         assertThat(resp).isNotNull();
         assertThat(resp).isEqualTo(processResponse);
@@ -69,19 +69,19 @@ class ProcessServiceTest extends BaseServiceTest {
 
     @Test
     void findAllClientProcesses() {
-        Client client = getClient();
-        List<Process> processes = List.of(getProcess(uuidProcess1), getProcess(uuidProcess2));
-        List<ProcessResponse> processResponses = List.of(getProcessResponse(uuidProcess1), getProcessResponse(uuidProcess2));
+        final Client client = getClient();
+        final List<Process> processes = List.of(getProcess(uuidProcess1), getProcess(uuidProcess2));
+        final List<ProcessResponse> processResponses = List.of(getProcessResponse(uuidProcess1), getProcessResponse(uuidProcess2));
         when(processRepo.findAllByIdClient(client.getIdClient())).thenReturn(processes);
         when(processMapper.toProcessResponseList(processes)).thenReturn(processResponses);
 
-        List<ProcessResponse> resp = processService.findAllClientProcesses(client.getIdClient());
+        final List<ProcessResponse> resp = processService.findAllClientProcesses(client.getIdClient());
 
         assertThat(resp).hasSize(2);
         assertThat(resp).containsAll(processResponses);
     }
 
-    private Client getClient(){
+    private Client getClient() {
         return Client.builder()
                 .idClient(uuidClient)
                 .inn("111111111111")
@@ -89,7 +89,7 @@ class ProcessServiceTest extends BaseServiceTest {
                 .build();
     }
 
-    private ProcessStatus getProcessStatus(){
+    private ProcessStatus getProcessStatus() {
         return ProcessStatus.builder()
                 .idProcessStatus(uuidProcessStatus)
                 .name("NEW")
@@ -97,13 +97,13 @@ class ProcessServiceTest extends BaseServiceTest {
                 .build();
     }
 
-    private Process getProcess(UUID uuidProcess){
+    private Process getProcess(final UUID uuidProcess) {
         return Process.builder()
                 .idProcess(uuidProcess)
                 .build();
     }
 
-    private ProcessResponse getProcessResponse(UUID uuidProcess){
+    private ProcessResponse getProcessResponse(final UUID uuidProcess) {
         return new ProcessResponse()
                 .idProcess(uuidProcess.toString());
     }
