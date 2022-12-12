@@ -40,8 +40,8 @@ class ProcessStatusControllerTest extends BaseControllerTest {
     }
 
     @Test
-    void whenGetAllProcessStatuses_then200() throws Exception {
-        List<ProcessStatusResponse> processStatusResp = List.of(
+    void whenGetAllProcessStatusesThen200() throws Exception {
+        final List<ProcessStatusResponse> processStatusResp = List.of(
                 new ProcessStatusResponse().idProcessStatus(UUID.randomUUID().toString()),
                 new ProcessStatusResponse().idProcessStatus(UUID.randomUUID().toString()),
                 new ProcessStatusResponse().idProcessStatus(UUID.randomUUID().toString())
@@ -49,13 +49,13 @@ class ProcessStatusControllerTest extends BaseControllerTest {
 
         when(processStatusService.getAllProcessStatuses()).thenReturn(processStatusResp);
 
-        MockHttpServletResponse resp = mvc.perform(get("/process-statuses")
+        final MockHttpServletResponse resp = mvc.perform(get("/process-statuses")
                         .contentType(APPLICATION_JSON))
                 .andReturn().getResponse();
 
         assertThat(resp.getStatus()).isEqualTo(OK.value());
 
-        List<ProcessStatusResponse> respAct = objectMapper.readValue(resp.getContentAsString(), new TypeReference<>() {});
+        final List<ProcessStatusResponse> respAct = objectMapper.readValue(resp.getContentAsString(), new TypeReference<>() { });
         assertThat(respAct).hasSize(3);
         assertThat(respAct).containsAll(processStatusResp);
     }

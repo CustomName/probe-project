@@ -24,7 +24,9 @@ import static org.mockito.Mockito.when;
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 class AccountControllerTest extends BaseControllerTest {
 
@@ -44,50 +46,50 @@ class AccountControllerTest extends BaseControllerTest {
     }
 
     @Test
-    void whenGetAllClientAccounts_thenStatus200() throws Exception {
-        List<AccountResponse> accountResponses = List.of(
+    void whenGetAllClientAccountsThenStatus200() throws Exception {
+        final List<AccountResponse> accountResponses = List.of(
                 new AccountResponse().idAccount(UUID.randomUUID().toString()),
                 new AccountResponse().idAccount(UUID.randomUUID().toString()),
                 new AccountResponse().idAccount(UUID.randomUUID().toString())
         );
         when(accountService.findAllClientAccounts(any())).thenReturn(accountResponses);
 
-        MockHttpServletResponse response = mvc.perform(get("/accounts/clients/7d56e2ba-855e-42a7-bb71-0540ddac38ef")
+        final MockHttpServletResponse response = mvc.perform(get("/accounts/clients/7d56e2ba-855e-42a7-bb71-0540ddac38ef")
                         .contentType(APPLICATION_JSON))
                 .andReturn().getResponse();
 
         assertThat(response.getStatus()).isEqualTo(OK.value());
 
-        List<AccountResponse> respList = objectMapper.readValue(response.getContentAsString(), new TypeReference<>() {});
+        final List<AccountResponse> respList = objectMapper.readValue(response.getContentAsString(), new TypeReference<>() { });
         assertThat(respList).hasSize(3);
         assertThat(respList).isEqualTo(accountResponses);
     }
 
     @Test
-    void whenPostAccountReserve_thenStatus200() throws Exception {
-        AccountResponse accountResponse = new AccountResponse()
+    void whenPostAccountReserveThenStatus200() throws Exception {
+        final AccountResponse accountResponse = new AccountResponse()
                 .idAccount(UUID.randomUUID().toString());
-        AccountReserveRequest accountRequest = new AccountReserveRequest()
+        final AccountReserveRequest accountRequest = new AccountReserveRequest()
                 .idClient(UUID.randomUUID().toString());
 
         when(accountService.reserveAccount(accountRequest)).thenReturn(accountResponse);
 
-        MockHttpServletResponse response = mvc.perform(post("/accounts/reserve")
+        final MockHttpServletResponse response = mvc.perform(post("/accounts/reserve")
                         .contentType(APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(accountRequest)))
                 .andReturn().getResponse();
 
         assertThat(response.getStatus()).isEqualTo(CREATED.value());
 
-        AccountResponse accountRespAct = objectMapper.readValue(response.getContentAsString(), AccountResponse.class);
+        final AccountResponse accountRespAct = objectMapper.readValue(response.getContentAsString(), AccountResponse.class);
         assertThat(accountRespAct).isEqualTo(accountResponse);
     }
 
     @Test
-    void whenPatchAccountOpen_thenStatus200() throws Exception {
-        AccountOpenRequest req = new AccountOpenRequest()
+    void whenPatchAccountOpenThenStatus200() throws Exception {
+        final AccountOpenRequest req = new AccountOpenRequest()
                 .idClient(UUID.randomUUID().toString());
-        List<AccountResponse> accRespExp = List.of(
+        final List<AccountResponse> accRespExp = List.of(
                 new AccountResponse()
                         .idAccount(UUID.randomUUID().toString()),
                 new AccountResponse()
@@ -96,15 +98,15 @@ class AccountControllerTest extends BaseControllerTest {
 
         when(accountService.openAccounts(req)).thenReturn(accRespExp);
 
-        MockHttpServletResponse resp = mvc.perform(patch("/accounts/open")
+        final MockHttpServletResponse resp = mvc.perform(patch("/accounts/open")
                         .contentType(APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(req)))
                 .andReturn().getResponse();
 
         assertThat(resp.getStatus()).isEqualTo(OK.value());
 
-        List<AccountResponse> accRespAct = objectMapper.readValue(resp.getContentAsString(),
-                new TypeReference<>() {});
+        final List<AccountResponse> accRespAct = objectMapper.readValue(resp.getContentAsString(),
+                new TypeReference<>() { });
         assertThat(accRespAct).isEqualTo(accRespExp);
     }
 

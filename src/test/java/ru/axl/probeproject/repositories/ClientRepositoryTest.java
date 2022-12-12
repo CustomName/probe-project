@@ -15,7 +15,7 @@ class ClientRepositoryTest extends BaseRepositoryTest {
     @Test
     void shouldFindByInn() {
         final String clientInn = "111111111111";
-        Client client = clientRepo.findByInn(clientInn).orElseThrow();
+        final Client client = clientRepo.findByInn(clientInn).orElseThrow();
 
         assertThat(client).isNotNull();
         assertThat(client.getInn()).isEqualTo(clientInn);
@@ -29,7 +29,7 @@ class ClientRepositoryTest extends BaseRepositoryTest {
         client.setFio("Тестовый Тест Тестович");
         client = clientRepo.save(client);
 
-        Client foundClient = clientRepo.findByIdClient(client.getIdClient()).orElseThrow();
+        final Client foundClient = clientRepo.findByIdClient(client.getIdClient()).orElseThrow();
         assertThat(foundClient).isNotNull();
         assertThat(foundClient).isEqualTo(client);
     }

@@ -40,27 +40,27 @@ class DictionaryControllerTest extends BaseControllerTest {
     }
 
     @Test
-    void whenGetCurrencies_thenStatus200() throws Exception {
-        List<CurrencyResponse> currencyResponses = List.of(
+    void whenGetCurrenciesThenStatus200() throws Exception {
+        final List<CurrencyResponse> currencyResponses = List.of(
                 new CurrencyResponse(),
                 new CurrencyResponse()
         );
 
         when(currencyService.getCurrencies()).thenReturn(currencyResponses);
 
-        MockHttpServletResponse resp = mvc.perform(get("/dictionaries/currencies")
+        final MockHttpServletResponse resp = mvc.perform(get("/dictionaries/currencies")
                         .contentType(APPLICATION_JSON))
                 .andReturn().getResponse();
 
         assertThat(resp.getStatus()).isEqualTo(OK.value());
 
-        List<CurrencyResponse> respList = objectMapper.readValue(resp.getContentAsString(), new TypeReference<>() {});
+        final List<CurrencyResponse> respList = objectMapper.readValue(resp.getContentAsString(), new TypeReference<>() { });
         assertThat(respList).hasSize(2);
         assertThat(respList).isEqualTo(currencyResponses);
     }
 
     @Test
-    void whenGetCurrenciesEmptyList_thenStatus200() throws Exception {
+    void whenGetCurrenciesEmptyListThenStatus200() throws Exception {
         when(currencyService.getCurrencies()).thenReturn(List.of());
 
         mvc.perform(get("/dictionaries/currencies")
@@ -69,7 +69,7 @@ class DictionaryControllerTest extends BaseControllerTest {
     }
 
     @Test
-    void whenGetCurrencies_thenStatus500() throws Exception {
+    void whenGetCurrenciesThenStatus500() throws Exception {
         when(currencyService.getCurrencies()).thenThrow(new RuntimeException());
 
         mvc.perform(get("/dictionaries/currencies")

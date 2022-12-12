@@ -44,9 +44,9 @@ class ProcessControllerTest extends BaseControllerTest {
 
     @Test
     void getAllClientProcesses() throws Exception {
-        UUID uuidClient = UUID.randomUUID();
+        final UUID uuidClient = UUID.randomUUID();
 
-        List<ProcessResponse> processResponses = List.of(
+        final List<ProcessResponse> processResponses = List.of(
                 new ProcessResponse().idProcess(UUID.randomUUID().toString()),
                 new ProcessResponse().idProcess(UUID.randomUUID().toString()),
                 new ProcessResponse().idProcess(UUID.randomUUID().toString())
@@ -54,13 +54,13 @@ class ProcessControllerTest extends BaseControllerTest {
 
         when(processService.findAllClientProcesses(uuidClient)).thenReturn(processResponses);
 
-        MockHttpServletResponse resp = mvc.perform(get("/processes/clients/" + uuidClient)
+        final MockHttpServletResponse resp = mvc.perform(get("/processes/clients/" + uuidClient)
                         .contentType(APPLICATION_JSON))
                 .andReturn().getResponse();
 
         assertThat(resp.getStatus()).isEqualTo(OK.value());
 
-        List<ProcessResponse> processRespAct = objectMapper.readValue(resp.getContentAsString(), new TypeReference<>() {});
+        final List<ProcessResponse> processRespAct = objectMapper.readValue(resp.getContentAsString(), new TypeReference<>() { });
 
         assertThat(processRespAct).hasSize(3);
         assertThat(processRespAct).containsAll(processResponses);
@@ -69,19 +69,19 @@ class ProcessControllerTest extends BaseControllerTest {
     @Test
     void postProcess() throws Exception {
         final String idClient = UUID.randomUUID().toString();
-        ProcessResponse processResponse = new ProcessResponse().idProcess(UUID.randomUUID().toString());
-        ProcessRequest processRequest = new ProcessRequest().idClient(idClient);
+        final ProcessResponse processResponse = new ProcessResponse().idProcess(UUID.randomUUID().toString());
+        final ProcessRequest processRequest = new ProcessRequest().idClient(idClient);
 
         when(processService.createProcess(processRequest)).thenReturn(processResponse);
 
-        MockHttpServletResponse resp = mvc.perform(post("/processes")
+        final MockHttpServletResponse resp = mvc.perform(post("/processes")
                         .contentType(APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(processRequest)))
                 .andReturn().getResponse();
 
         assertThat(resp.getStatus()).isEqualTo(CREATED.value());
 
-        ProcessResponse processRespAct = objectMapper.readValue(resp.getContentAsString(), ProcessResponse.class);
+        final ProcessResponse processRespAct = objectMapper.readValue(resp.getContentAsString(), ProcessResponse.class);
         assertThat(processRespAct).isEqualTo(processResponse);
     }
 

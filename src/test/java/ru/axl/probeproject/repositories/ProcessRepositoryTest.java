@@ -15,7 +15,7 @@ import java.util.Set;
 import static org.assertj.core.api.Assertions.assertThat;
 import static ru.axl.probeproject.model.enums.ProcessStatusEnum.NEW;
 
-@Sql(scripts = {"/scripts/data-processes-test.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+@Sql(scripts = "/scripts/data-processes-test.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 class ProcessRepositoryTest extends BaseRepositoryTest {
 
     @Autowired
@@ -29,16 +29,16 @@ class ProcessRepositoryTest extends BaseRepositoryTest {
 
     @Test
     void shouldFindAllByIdClient() {
-        Client client = clientRepo.findByInn("111111111111").orElseThrow();
+        final Client client = clientRepo.findByInn("111111111111").orElseThrow();
 
-        List<Process> processes = processRepo.findAllByIdClient(client.getIdClient());
+        final List<Process> processes = processRepo.findAllByIdClient(client.getIdClient());
 
         assertThat(processes).hasSize(3);
     }
 
     @Test
     void shouldFindAllByIdClientInStatuses() {
-        Client client = clientRepo.findByInn("111111111112").orElseThrow();
+        final Client client = clientRepo.findByInn("111111111112").orElseThrow();
 
         List<Process> processes = processRepo.findAllByIdClientInStatuses(client.getIdClient(),
                 Set.of("NEW", "COMPLIANCE_SUCCESS", "ACCOUNT_PROCESSING"));
@@ -51,7 +51,7 @@ class ProcessRepositoryTest extends BaseRepositoryTest {
 
     @Test
     void shouldFindAllWithStatusAndLastUpdateDateBefore() {
-        ProcessStatus newStatus = processStatusRepo.findByName(NEW.name()).orElseThrow();
+        final ProcessStatus newStatus = processStatusRepo.findByName(NEW.name()).orElseThrow();
 
         List<Process> processes = processRepo.findAllWithStatusAndLastUpdateDateBefore(newStatus,
                 OffsetDateTime.now().minusMinutes(5));

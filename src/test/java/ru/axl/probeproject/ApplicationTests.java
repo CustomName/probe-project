@@ -3,7 +3,12 @@ package ru.axl.probeproject;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import ru.axl.probeproject.controllers.*;
+import ru.axl.probeproject.controllers.AccountController;
+import ru.axl.probeproject.controllers.AccountStatusController;
+import ru.axl.probeproject.controllers.ClientController;
+import ru.axl.probeproject.controllers.DictionaryController;
+import ru.axl.probeproject.controllers.ProcessController;
+import ru.axl.probeproject.controllers.ProcessStatusController;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

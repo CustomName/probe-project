@@ -15,7 +15,7 @@ class CurrencyRepositoryTest extends BaseRepositoryTest {
     @Test
     void shouldFindByCode() {
         final String currencyCode = "810";
-        Currency currency = currencyRepo.findByCode(currencyCode).orElseThrow();
+        final Currency currency = currencyRepo.findByCode(currencyCode).orElseThrow();
 
         assertThat(currency).isNotNull();
         assertThat(currency.getCode()).isEqualTo(currencyCode);

@@ -29,35 +29,35 @@ class AccountStatusServiceTest extends BaseServiceTest {
 
     @Test
     void shouldGetAllAccountStatuses() {
-        AccountStatus accountStatus1 = AccountStatus.builder()
+        final AccountStatus accountStatus1 = AccountStatus.builder()
                 .idAccountStatus(UUID.randomUUID())
                 .name("RESERVING")
                 .description("Счет на резервировании")
                 .build();
 
-        AccountStatus accountStatus2 = AccountStatus.builder()
+        final AccountStatus accountStatus2 = AccountStatus.builder()
                 .idAccountStatus(UUID.randomUUID())
                 .name("OPENING")
                 .description("Счет на открытии")
                 .build();
 
-        AccountStatusResponse accountStatusResp1 = new AccountStatusResponse()
+        final AccountStatusResponse accountStatusResp1 = new AccountStatusResponse()
                 .idAccountStatus(accountStatus1.getIdAccountStatus().toString())
                 .name(accountStatus1.getName())
                 .description(accountStatus1.getDescription());
 
-        AccountStatusResponse accountStatusResp2 = new AccountStatusResponse()
+        final AccountStatusResponse accountStatusResp2 = new AccountStatusResponse()
                 .idAccountStatus(accountStatus2.getIdAccountStatus().toString())
                 .name(accountStatus2.getName())
                 .description(accountStatus2.getDescription());
 
-        List<AccountStatus> accountStatuses = List.of(accountStatus1, accountStatus2);
-        List<AccountStatusResponse> accountStatusResponses = List.of(accountStatusResp1, accountStatusResp2);
+        final List<AccountStatus> accountStatuses = List.of(accountStatus1, accountStatus2);
+        final List<AccountStatusResponse> accountStatusResponses = List.of(accountStatusResp1, accountStatusResp2);
 
         when(accountStatusMapper.toAccountStatusResponseList(accountStatuses)).thenReturn(accountStatusResponses);
         when(accountStatusRepo.findAll()).thenReturn(accountStatuses);
 
-        List<AccountStatusResponse> allAccountStatusesResp = accountStatusService.getAllAccountStatuses();
+        final List<AccountStatusResponse> allAccountStatusesResp = accountStatusService.getAllAccountStatuses();
         assertThat(allAccountStatusesResp).hasSize(2);
 
         assertThat(allAccountStatusesResp).containsAll(accountStatusResponses);

@@ -40,8 +40,8 @@ class ClientControllerTest extends BaseControllerTest {
     }
 
     @Test
-    void whenGetClients_then200() throws Exception {
-        List<ClientResponse> clientResponses = List.of(
+    void whenGetClientsThen200() throws Exception {
+        final List<ClientResponse> clientResponses = List.of(
                 new ClientResponse().idClient(UUID.randomUUID().toString()),
                 new ClientResponse().idClient(UUID.randomUUID().toString()),
                 new ClientResponse().idClient(UUID.randomUUID().toString())
@@ -49,32 +49,32 @@ class ClientControllerTest extends BaseControllerTest {
 
         when(clientService.findAll()).thenReturn(clientResponses);
 
-        MockHttpServletResponse resp = mvc.perform(get("/clients")
+        final MockHttpServletResponse resp = mvc.perform(get("/clients")
                         .contentType(APPLICATION_JSON))
                 .andReturn().getResponse();
 
         assertThat(resp.getStatus()).isEqualTo(OK.value());
 
-        List<ClientResponse> clientResponsesAct = objectMapper.readValue(resp.getContentAsString(), new TypeReference<>() {});
+        final List<ClientResponse> clientResponsesAct = objectMapper.readValue(resp.getContentAsString(), new TypeReference<>() { });
 
         assertThat(clientResponsesAct).hasSize(3);
         assertThat(clientResponsesAct).containsAll(clientResponses);
     }
 
     @Test
-    void whenFindClientByInn_then200() throws Exception {
-        ClientResponse clientResponse = new ClientResponse()
+    void whenFindClientByInnThen200() throws Exception {
+        final ClientResponse clientResponse = new ClientResponse()
                 .idClient(UUID.randomUUID().toString())
                 .inn("111111111111")
                 .fio("Smith Jonson Jonsonovich");
 
         when(clientService.findByInn(clientResponse.getInn())).thenReturn(clientResponse);
 
-        MockHttpServletResponse resp = mvc.perform(get("/clients/inn/111111111111")
+        final MockHttpServletResponse resp = mvc.perform(get("/clients/inn/111111111111")
                         .contentType(APPLICATION_JSON))
                 .andReturn().getResponse();
 
-        ClientResponse clientRespAct = objectMapper.readValue(resp.getContentAsString(), ClientResponse.class);
+        final ClientResponse clientRespAct = objectMapper.readValue(resp.getContentAsString(), ClientResponse.class);
 
         assertThat(resp.getStatus()).isEqualTo(OK.value());
         assertThat(clientRespAct).isEqualTo(clientResponse);

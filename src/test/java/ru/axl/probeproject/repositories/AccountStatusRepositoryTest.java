@@ -15,7 +15,7 @@ class AccountStatusRepositoryTest extends BaseRepositoryTest {
     @Test
     void shouldFindByName() {
         final String accountStatusName = "RESERVED";
-        AccountStatus accountStatus = accountStatusRepo.findByName(accountStatusName).orElseThrow();
+        final AccountStatus accountStatus = accountStatusRepo.findByName(accountStatusName).orElseThrow();
 
         assertThat(accountStatus).isNotNull();
         assertThat(accountStatus.getName()).isEqualTo(accountStatusName);

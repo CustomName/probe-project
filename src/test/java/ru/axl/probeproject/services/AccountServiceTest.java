@@ -66,12 +66,12 @@ class AccountServiceTest extends BaseServiceTest {
 
     @Test
     void shouldFindAllClientAccounts() {
-        List<Account> accountList = getAccountList();
-        List<AccountResponse> accountResponseList = getAccountResponseList();
+        final List<Account> accountList = getAccountList();
+        final List<AccountResponse> accountResponseList = getAccountResponseList();
         when(accountMapper.toAccountResponseList(accountList)).thenReturn(accountResponseList);
         when(accountRepo.findAllByIdClient(uuidClient)).thenReturn(accountList);
 
-        List<AccountResponse> allClientAccounts = accountService.findAllClientAccounts(uuidClient);
+        final List<AccountResponse> allClientAccounts = accountService.findAllClientAccounts(uuidClient);
 
         assertThat(allClientAccounts).hasSize(2);
     }
@@ -85,30 +85,30 @@ class AccountServiceTest extends BaseServiceTest {
         when(accountRepo.save(any())).thenReturn(account);
         when(accountMapper.toAccountResponse(account)).thenReturn(getAccountResponse(uuidAccountResponse1));
 
-        AccountReserveRequest accountRequest = new AccountReserveRequest()
+        final AccountReserveRequest accountRequest = new AccountReserveRequest()
                 .idClient(uuidClient.toString())
                 .code(currencyCode);
-        AccountResponse accountResponse = accountService.reserveAccount(accountRequest);
+        final AccountResponse accountResponse = accountService.reserveAccount(accountRequest);
 
         assertThat(accountResponse).isNotNull();
     }
 
-    private AccountResponse getAccountResponse(UUID idAccountResponse){
+    private AccountResponse getAccountResponse(final UUID idAccountResponse) {
         return new AccountResponse().idAccount(idAccountResponse.toString());
     }
 
-    private List<AccountResponse> getAccountResponseList(){
+    private List<AccountResponse> getAccountResponseList() {
         return List.of(getAccountResponse(uuidAccountResponse1),
                 getAccountResponse(uuidAccountResponse2));
     }
 
-    private Client getClient(){
+    private Client getClient() {
         return Client.builder()
                 .idClient(uuidClient)
                 .build();
     }
 
-    private Currency getCurrency(){
+    private Currency getCurrency() {
         return Currency.builder()
                 .idCurrency(uuidCurrency)
                 .code(currencyCode)
@@ -117,17 +117,17 @@ class AccountServiceTest extends BaseServiceTest {
                 .build();
     }
 
-    private AccountStatus getAccountStatus(){
+    private AccountStatus getAccountStatus() {
         return AccountStatus.builder()
                 .idAccountStatus(uuidAccountStatus)
                 .name("RESERVING")
                 .build();
     }
 
-    private Account getAccount(UUID idAccount){
-        Client client = getClient();
-        Currency currency = getCurrency();
-        AccountStatus accountStatus = getAccountStatus();
+    private Account getAccount(final UUID idAccount) {
+        final Client client = getClient();
+        final Currency currency = getCurrency();
+        final AccountStatus accountStatus = getAccountStatus();
 
         return Account.builder()
                 .idAccount(idAccount)
@@ -137,7 +137,7 @@ class AccountServiceTest extends BaseServiceTest {
                 .build();
     }
 
-    private List<Account> getAccountList(){
+    private List<Account> getAccountList() {
         return List.of(getAccount(uuidAccount1),
                 getAccount(uuidAccount2));
     }
